@@ -20,20 +20,19 @@
           </div>
           <span class="input-span">
             <div class="container" style="margin-bottom: 1rem;">
-              <input required="" type="text" name="comment" id="comment" class="input" required>
+              <input required="" type="text" name="comment" id="comment" class="input">
               <label class="label bottom">
                 <strong>Chat</strong>
               </label>
             </div>
           </span>
         </div>
-        <button type="chat" class="chat">Send</button>
+        <button type="submit" class="chat">Send</button>
       </form>
       <div id="comments"></div>
-  </body>
-</html>
-
-  <!-- Firebase SDK imports -->
+    </div>
+	
+	  <!-- Firebase SDK imports -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
     import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
@@ -110,3 +109,7 @@ $(function(){
         });
     });
 });
+
+    </script>
+  </body>
+</html>
