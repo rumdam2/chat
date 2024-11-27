@@ -27,8 +27,24 @@ const chatBox = document.getElementById("chat-box");
 const usernameInput = document.getElementById("username-input");
 
 loginButton.addEventListener("click", () => {
+  console.log("Button clicked"); // Pastikan tombol ditekan
   const username = usernameInput.value;
-  
+  if (username) {
+    signInAnonymously(auth)
+      .then(() => {
+        console.log("Signed in anonymously");
+        localStorage.setItem("username", username);
+        chatBox.style.display = "block";
+        usernameInput.style.display = "none";
+        loginButton.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Login failed", error);
+      });
+  } else {
+    console.log("Username is empty");
+  }
+});
   if (username) {
     // Login anonim
     signInAnonymously(auth)
