@@ -7,15 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="chat-container">
-    <input type="text" id="username" placeholder="Enter your username" />
-    <button id="enter-chat">Enter Chat</button>
-    <div id="chat-box" style="display:none;">
-      <ul id="messages"></ul>
-      <input type="text" id="message-input" placeholder="Type a message" />
-      <button id="send-message">Send</button>
-    </div>
-  </div>
+<div class="att">
+									<h3 class="kh">Doa dan Ucapan</h3>
+									<form id="attendanceForm" class="form">
+										<div class="input-row">
+											<div class="input-span">
+												<div class="container">
+													<input required="" type="text" name="name" class="input" id="name">
+													<label class="label" for="name">
+														<strong>Nama</strong>
+													</label>
+												</div>
+											</div>
+											<span class="input-span">
+												<div class="container" style="margin-bottom: 1rem;">
+													<input required="" type="text" name="comment" id="comment" class="input" required>
+													<label class="label bottom">
+														<strong>Ucapan & Do'a Restu</strong>
+													</label>
+												</div>
+											</span>
+                  </div>
+                    <button type="submit" class="submit">Submit</button>
 
   <!-- Firebase SDK imports -->
   <script type="module">
@@ -34,74 +47,63 @@
       measurementId: "G-NGXY4DDEKW"
     };
 
-    // Inisialisasi Firebase
-    const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const tableName = 'attendance'
 
-    // Inisialisasi Auth dan Database
-    const auth = getAuth(app);
-    const db = getDatabase(app);
+const getComments = () => {
+	const dbRef = ref(db, `${tableName}/`)
+	$('#comments').html('')
+	const commentsDiv = $('#comments');
+	
+	onValue(dbRef, (snapshot) => {
+		snapshot.forEach((childSnapshot) => {
+			const childKey = childSnapshot.key;
+			const childData = childSnapshot.val();
+			const elem = document.createElement('div')
+      elem.innerHTML = `
+        <div class="comment-item">
+          <p><strong>${childData.name}</strong>: ${childData.comment}</p>
+          <p><em>${childData.attendance}</em></p> <!-- Display attendance status -->
+        </div>
+      `;
 
-    // Elemen-elemen dari HTML
-    const usernameInput = document.getElementById("username");
-    const enterChatButton = document.getElementById("enter-chat");
-    const chatBox = document.getElementById("chat-box");
-    const messageInput = document.getElementById("message-input");
-    const sendButton = document.getElementById("send-message");
-    const messagesList = document.getElementById("messages");
-
-    // Fungsi untuk login anonim
-    enterChatButton.addEventListener("click", () => {
-      const username = usernameInput.value;
-      if (username) {
-        signInAnonymously(auth)
-          .then(() => {
-            console.log("Signed in anonymously");
-            localStorage.setItem("username", username);
-            chatBox.style.display = "block"; // Menampilkan chat box
-            usernameInput.style.display = "none"; // Menyembunyikan input username
-            enterChatButton.style.display = "none"; // Menyembunyikan tombol enter chat
-          })
-          .catch((error) => {
-            console.error("Login failed", error);
-          });
-      } else {
-        console.log("Username is empty");
-      }
+	      $(elem).appendTo(commentsDiv);
+	  	});
+	},{
+		onlyOnce: true
     });
+}
 
-    // Fungsi kirim pesan
-    sendButton.addEventListener("click", () => {
-      const message = messageInput.value;
-      const username = localStorage.getItem("username");
-
-      if (message && username) {
-        const messagesRef = ref(db, "messages");
-        push(messagesRef, {
-          username: username,
-          text: message
+$(function(){
+    getComments();
+    
+		$('#attendanceForm').submit(function(e){
+        // Add loading screen
+		$('#loadingScreen').addClass('show');
+        e.preventDefault();
+        
+        // Ambil data dari form
+        const name = $('#name').val();
+        const comment = $('#comment').val();
+		const attendance = $('#attendance').val();
+        
+        // Simpan data ke Realtime database
+        const userId = push(child(ref(db), tableName)).key;
+        set(ref(db, `${tableName}/${userId}`), {
+            name: name,
+            comment: comment,
+			attendance: attendance
         }).then(() => {
-          console.log("Message sent successfully"); // Menampilkan pesan di console setelah berhasil
+            // Reset form
+            $('#name').val('');
+            $('#comment').val('');
+			$('#attendance').val('');
+			
+            getComments();
         }).catch((error) => {
-          console.error("Error sending message:", error);
+            console.error("Error submitting data:", error);
         });
-        messageInput.value = ""; // Reset input pesan setelah mengirim
-      }
     });
-
-    // Fungsi untuk menampilkan pesan dari Firebase
-    const messagesRef = ref(db, "messages");
-
-    onValue(messagesRef, (snapshot) => {
-      const messages = snapshot.val();
-      messagesList.innerHTML = ''; // Reset daftar pesan
-
-      for (let id in messages) {
-        const messageData = messages[id];
-        const li = document.createElement("li");
-        li.textContent = `${messageData.username}: ${messageData.text}`;
-        messagesList.appendChild(li);
-      }
-    });
-  </script>
-</body>
-</html>
+});
