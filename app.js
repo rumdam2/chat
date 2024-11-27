@@ -1,12 +1,16 @@
+import { initializeApp } from "firebase/app";  // Inisialisasi Firebase
+import { getAuth, signInAnonymously } from "firebase/auth";  // Autentikasi
+import { getDatabase, ref, push } from "firebase/database";  // Realtime Database
+
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
+  authDomain: "chat-84023.firebaseapp.com",
+  projectId: "chat-84023",
+  storageBucket: "chat-84023.firebasestorage.app",
+  messagingSenderId: "138879175931",
+  appId: "1:138879175931:web:418c9dfc90849c4198745e",
+  measurementId: "G-NGXY4DDEKW"
 };
 
 const app = firebase.initializeApp(firebaseConfig);
