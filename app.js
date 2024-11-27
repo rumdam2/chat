@@ -1,7 +1,7 @@
 // Import Firebase SDK (untuk Firebase v9+ modular SDK)
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously } from "firebase/auth";
-import { getDatabase, ref, set, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -43,21 +43,6 @@ loginButton.addEventListener("click", () => {
       });
   } else {
     console.log("Username is empty");
-  }
-});
-  if (username) {
-    // Login anonim
-    signInAnonymously(auth)
-      .then(() => {
-        // Setelah login anonim berhasil
-        localStorage.setItem("username", username); // Simpan username di localStorage
-        chatBox.style.display = "block";  // Tampilkan chat box
-        usernameInput.style.display = "none";  // Sembunyikan input username
-        loginButton.style.display = "none";  // Sembunyikan tombol login
-      })
-      .catch((error) => {
-        console.error("Login failed", error);
-      });
   }
 });
 
