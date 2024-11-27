@@ -10,7 +10,7 @@
   <div id="chat-container">
     <input type="text" id="username" placeholder="Enter your username" />
     <button id="enter-chat">Enter Chat</button>
-    <div id="chat-box">
+    <div id="chat-box" style="display:none;">
       <ul id="messages"></ul>
       <input type="text" id="message-input" placeholder="Type a message" />
       <button id="send-message">Send</button>
@@ -79,6 +79,10 @@
         push(messagesRef, {
           username: username,
           text: message
+        }).then(() => {
+          console.log("Message sent successfully"); // Menampilkan pesan di console setelah berhasil
+        }).catch((error) => {
+          console.error("Error sending message:", error);
         });
         messageInput.value = ""; // Reset input pesan setelah mengirim
       }
@@ -99,7 +103,5 @@
       }
     });
   </script>
-
-  <script type="module" src="app.js"></script> <!-- Your app.js script -->
 </body>
 </html>
