@@ -1,8 +1,9 @@
-import { initializeApp } from "firebase/app";  // Inisialisasi Firebase
-import { getAuth, signInAnonymously } from "firebase/auth";  // Autentikasi
-import { getDatabase, ref, push } from "firebase/database";  // Realtime Database
+// Import Firebase SDK (untuk Firebase v9+ modular SDK)
+import { initializeApp } from "firebase/app";
+import { getAuth, signInAnonymously } from "firebase/auth";
+import { getDatabase, ref, set, push, onValue } from "firebase/database";
 
-// Firebase configuration
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
   authDomain: "chat-84023.firebaseapp.com",
@@ -13,52 +14,68 @@ const firebaseConfig = {
   measurementId: "G-NGXY4DDEKW"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const auth = firebase.auth();
+// Inisialisasi Firebase
+const app = initializeApp(firebaseConfig);
 
-const usernameInput = document.getElementById("username");
-const enterChatButton = document.getElementById("enter-chat");
+// Inisialisasi Auth dan Database
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+// Fungsi untuk login anonim
+const loginButton = document.getElementById("login-button");
 const chatBox = document.getElementById("chat-box");
-const messageInput = document.getElementById("message-input");
-const sendMessageButton = document.getElementById("send-message");
-const messagesList = document.getElementById("messages");
+const usernameInput = document.getElementById("username-input");
 
-// Enter chat function
-enterChatButton.addEventListener("click", () => {
+loginButton.addEventListener("click", () => {
   const username = usernameInput.value;
+  
   if (username) {
-    auth.signInAnonymously().then(() => {
-      localStorage.setItem("username", username);
-      chatBox.style.display = "block";
-      usernameInput.style.display = "none";
-      enterChatButton.style.display = "none";
-      loadMessages();
-    });
+    // Login anonim
+    signInAnonymously(auth)
+      .then(() => {
+        // Setelah login anonim berhasil
+        localStorage.setItem("username", username); // Simpan username di localStorage
+        chatBox.style.display = "block";  // Tampilkan chat box
+        usernameInput.style.display = "none";  // Sembunyikan input username
+        loginButton.style.display = "none";  // Sembunyikan tombol login
+      })
+      .catch((error) => {
+        console.error("Login failed", error);
+      });
   }
 });
 
-// Load messages from Firebase
-function loadMessages() {
-  db.ref("messages").on("child_added", (snapshot) => {
-    const message = snapshot.val();
-    const li = document.createElement("li");
-    li.textContent = `${message.username}: ${message.text}`;
-    messagesList.appendChild(li);
-    messagesList.scrollTop = messagesList.scrollHeight;
-  });
-}
+// Fungsi kirim pesan
+const messageInput = document.getElementById("message-input");
+const sendButton = document.getElementById("send-message");
 
-// Send message function
-sendMessageButton.addEventListener("click", () => {
-  const text = messageInput.value;
+sendButton.addEventListener("click", () => {
+  const message = messageInput.value;
   const username = localStorage.getItem("username");
 
-  if (text && username) {
-    db.ref("messages").push({
+  if (message && username) {
+    // Mendapatkan referensi ke database untuk menulis pesan
+    const messagesRef = ref(db, "messages");
+    push(messagesRef, {
       username: username,
-      text: text,
+      text: message
     });
-    messageInput.value = "";
+    messageInput.value = ""; // Reset input pesan setelah mengirim
+  }
+});
+
+// Fungsi untuk menampilkan pesan dari Firebase
+const messagesList = document.getElementById("messages-list");
+const messagesRef = ref(db, "messages");
+
+onValue(messagesRef, (snapshot) => {
+  const messages = snapshot.val();
+  messagesList.innerHTML = ''; // Reset daftar pesan
+
+  for (let id in messages) {
+    const messageData = messages[id];
+    const li = document.createElement("li");
+    li.textContent = `${messageData.username}: ${messageData.text}`;
+    messagesList.appendChild(li);
   }
 });
