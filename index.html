@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Chat</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="att">
-									<h3 class="kh">Doa dan Ucapan</h3>
-									<form id="attendanceForm" class="form">
-										<div class="input-row">
-											<div class="input-span">
-												<div class="container">
-													<input required="" type="text" name="name" class="input" id="name">
-													<label class="label" for="name">
-														<strong>Nama</strong>
-													</label>
-												</div>
-											</div>
-											<span class="input-span">
-												<div class="container" style="margin-bottom: 1rem;">
-													<input required="" type="text" name="comment" id="comment" class="input" required>
-													<label class="label bottom">
-														<strong>Ucapan & Do'a Restu</strong>
-													</label>
-												</div>
-											</span>
-                  </div>
-                    <button type="submit" class="submit">Submit</button>
-
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="att">
+      <form id="attendanceForm" class="form">
+        <div class="input-row">
+          <div class="input-span">
+            <div class="container">
+              <input required="" type="text" name="name" class="input" id="name">
+              <label class="label" for="name">
+                <strong>Nama</strong>
+              </label>
+            </div>
+          </div>
+          <span class="input-span">
+            <div class="container" style="margin-bottom: 1rem;">
+              <input required="" type="text" name="comment" id="comment" class="input" required>
+              <label class="label bottom">
+                <strong>Chat</strong>
+              </label>
+            </div>
+          </span>
+        </div>
+        <button type="chat" class="chat">Send</button>
+      </form>
+      <div id="comments"></div>
+  </body>
   <!-- Firebase SDK imports -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
@@ -79,7 +80,7 @@ const getComments = () => {
 $(function(){
     getComments();
     
-		$('#attendanceForm').submit(function(e){
+		$('#attendanceForm').chat(function(e){
         // Add loading screen
 		$('#loadingScreen').addClass('show');
         e.preventDefault();
