@@ -17,9 +17,89 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js"></script>
-  <script type="module" src="app.js"></script>
+  <!-- Firebase SDK imports -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+    
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
+      authDomain: "chat-84023.firebaseapp.com",
+      projectId: "chat-84023",
+      storageBucket: "chat-84023.firebasestorage.app",
+      messagingSenderId: "138879175931",
+      appId: "1:138879175931:web:418c9dfc90849c4198745e",
+      measurementId: "G-NGXY4DDEKW"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Inisialisasi Auth dan Database
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // Elemen-elemen dari HTML
+    const usernameInput = document.getElementById("username");
+    const enterChatButton = document.getElementById("enter-chat");
+    const chatBox = document.getElementById("chat-box");
+    const messageInput = document.getElementById("message-input");
+    const sendButton = document.getElementById("send-message");
+    const messagesList = document.getElementById("messages");
+
+    // Fungsi untuk login anonim
+    enterChatButton.addEventListener("click", () => {
+      const username = usernameInput.value;
+      if (username) {
+        signInAnonymously(auth)
+          .then(() => {
+            console.log("Signed in anonymously");
+            localStorage.setItem("username", username);
+            chatBox.style.display = "block"; // Menampilkan chat box
+            usernameInput.style.display = "none"; // Menyembunyikan input username
+            enterChatButton.style.display = "none"; // Menyembunyikan tombol enter chat
+          })
+          .catch((error) => {
+            console.error("Login failed", error);
+          });
+      } else {
+        console.log("Username is empty");
+      }
+    });
+
+    // Fungsi kirim pesan
+    sendButton.addEventListener("click", () => {
+      const message = messageInput.value;
+      const username = localStorage.getItem("username");
+
+      if (message && username) {
+        const messagesRef = ref(db, "messages");
+        push(messagesRef, {
+          username: username,
+          text: message
+        });
+        messageInput.value = ""; // Reset input pesan setelah mengirim
+      }
+    });
+
+    // Fungsi untuk menampilkan pesan dari Firebase
+    const messagesRef = ref(db, "messages");
+
+    onValue(messagesRef, (snapshot) => {
+      const messages = snapshot.val();
+      messagesList.innerHTML = ''; // Reset daftar pesan
+
+      for (let id in messages) {
+        const messageData = messages[id];
+        const li = document.createElement("li");
+        li.textContent = `${messageData.username}: ${messageData.text}`;
+        messagesList.appendChild(li);
+      }
+    });
+  </script>
+
+  <script type="module" src="app.js"></script> <!-- Your app.js script -->
 </body>
 </html>
