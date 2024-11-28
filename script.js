@@ -38,6 +38,15 @@ const sendBtn = document.getElementById("sendBtn");
 let currentUser = null;
 let currentPostId = null;
 
+// Daftar warna gelap
+const darkColors = ["#3b3b3b", "#2a2a2a", "#1b4f72", "#154734", "#4b3621", "#2c3e50"];
+
+// Fungsi untuk mendapatkan warna dari ID (acak dari daftar warna gelap)
+function getDarkColorFromId(id) {
+  const hash = id.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 0);
+  return darkColors[hash % darkColors.length];
+}
+
 // Handle user login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
@@ -188,12 +197,11 @@ onValue(ref(db, `messages/${currentPostId}`), (snapshot) => {
   }
 });
 
-
-
 // Navigate back to posts list
 function backToPosts() {
   chatContainer.style.display = "none";
   postsListContainer.style.display = "block";
+  createPostContainer.style.display = "block";
   loadPosts();
 }
 
