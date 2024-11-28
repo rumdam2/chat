@@ -3,21 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anonymous Chat</title>
+  <title>Anonymous</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 </head>
 <body>
+  <!-- Bagian untuk login dan membuat postingan -->
   <div id="login-container" class="login-container">
-    <h1>Enter Chat</h1>
+    <h1>Enter Your ID</h1>
     <input type="text" id="usernameInput" placeholder="Enter your ID..." />
-    <button id="loginBtn">Start Chat</button>
+    <button id="loginBtn">Start</button>
   </div>
 
+  <!-- Bagian untuk membuat postingan -->
+  <div id="create-post-container" class="create-post-container" style="display: none;">
+    <h2>Create a Post</h2>
+    <input type="text" id="postIdInput" placeholder="Enter Post ID" />
+    <textarea id="postContent" placeholder="Enter your post content"></textarea>
+    <button id="createPostBtn">Create Post</button>
+  </div>
+
+  <!-- Bagian untuk menampilkan daftar postingan -->
+  <div id="posts-list" class="posts-list" style="display: none;">
+    <h3>Posts</h3>
+    <ul id="postList"></ul>
+  </div>
+
+  <!-- Bagian chat -->
   <div id="chat-container" class="chat-container" style="display: none;">
     <div class="chat-header">
-      <h1>Simple Chat</h1>
+      <h1>Chat Room</h1>
     </div>
     <div id="chat-window" class="chat-window"></div>
     <div class="chat-input">
@@ -25,6 +41,7 @@
       <button id="sendBtn">Send</button>
     </div>
   </div>
+
   <script type="module" src="script.js"></script>
 </body>
 </html>
