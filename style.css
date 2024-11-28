@@ -75,6 +75,13 @@ body {
   box-sizing: border-box;
 }
 
+.h3
+    position: absolute;
+    margin-bottom: .5rem;
+    top: 0;
+    left: 0;
+    margin: 10px;
+
 /* Gaya untuk placeholder */
 #usernameInput::placeholder {
   color: #aaa; /* Warna placeholder */
@@ -317,7 +324,7 @@ body {
   position: fixed;
   bottom: 10px;
   left: 60px;
-  min-width: 20px;
+  min-width: 60vw;
   max-width: 80vw;
   background-color: #333; /* Latar belakang lebih gelap */
   padding: 20px;
