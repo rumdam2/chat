@@ -27,18 +27,20 @@
     </div>
   </div>
 
-<div id="create-post-container" style="display: none;">
+<!-- Icon yang dapat diklik -->
+<div id="icon-container" class="icon-container">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Pencil_icon.svg/1024px-Pencil_icon.svg.png" alt="Create Post" class="icon">
+</div>
+
+<!-- Form untuk menulis post -->
+<div id="create-post-container">
   <h2>Create a New Post</h2>
   <form id="postForm">
-    <div class="mainbox">
-      <div class="iconContainer">
-        <input type="checkbox" class="checkbox">
-      </div>
-      <textarea id="postContent" placeholder="Write your post here..." required></textarea>
-    </div>
+    <textarea id="postContent" placeholder="Write your post here..." required></textarea>
     <button type="submit" id="createPostBtn">Post</button>
   </form>
 </div>
+
 
 <!-- Chat Room -->
 <div id="chat-container" class="chat-container" style="display: none;">

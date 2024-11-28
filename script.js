@@ -38,6 +38,11 @@ const sendBtn = document.getElementById("sendBtn");
 let currentUser = null;
 let currentPostId = null;
 
+// Menampilkan form ketika icon diklik
+const iconContainer = document.getElementById('icon-container');
+const createPostContainer = document.getElementById('create-post-container');
+const postForm = document.getElementById('postForm');
+
 // Daftar warna gelap
 const darkColors = ["#3b3b3b", "#2a2a2a", "#1b4f72", "#154734", "#4b3621", "#2c3e50"];
 
@@ -92,7 +97,16 @@ function loadPosts() {
 }
 
 
-// Create a new post
+// Saat icon diklik, toggle form create post
+iconContainer.addEventListener('click', function() {
+  if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
+    createPostContainer.style.display = 'block';
+  } else {
+    createPostContainer.style.display = 'none';
+  }
+});
+
+// Fungsi untuk submit new post
 createPostBtn.addEventListener("click", () => {
   const postContent = postContentInput.value.trim();
   if (postContent) {
@@ -106,7 +120,7 @@ createPostBtn.addEventListener("click", () => {
     postContentInput.value = "";
     createPostContainer.style.display = "none";
     postsListContainer.style.display = "flex";
-    loadPosts();
+    loadPosts(); // Fungsi untuk memuat posts yang terbaru
   } else {
     alert("Please provide content for your post!");
   }
