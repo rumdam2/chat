@@ -122,9 +122,11 @@ function loadMessages(postId) {
   onValue(postMessagesRef, (snapshot) => {
     const messageData = snapshot.val();
     const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${messageData.user}:</strong> ${messageData.text}`;
-    chatWindow.appendChild(messageElement);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    if (messageData) {
+      messageElement.innerHTML = `<strong>${messageData.user}:</strong> ${messageData.text}`;
+      chatWindow.appendChild(messageElement);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
   });
 }
 
