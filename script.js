@@ -51,6 +51,7 @@ function getDarkColorFromId(id) {
   return darkColors[hash % darkColors.length];
 }
 
+iconContainer.style.display = "none";
 // Handle user login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
@@ -98,7 +99,7 @@ function loadPosts() {
   });
 }
 
-
+createPostContainer.style.display = "none";
 // Saat icon diklik, toggle form create post
 iconContainer.addEventListener('click', function() {
   if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
