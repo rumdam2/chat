@@ -118,17 +118,17 @@ function joinChatRoom(postId, post) {
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   // Assign a dark background color
-  chatWindow.innerHTML = "";
-  onChildAdded(postMessagesRef, (snapshot) => {
-    const messageData = snapshot.val();
-    const messageElement = document.createElement("p");
-    if (messageData) {
-      // messageElement.innerHTML = updateChatWindow(messageData);
-      // messageElement.innerHTML = `<strong>${messageData.user}:</strong> ${messageData.text}`;
-      chatWindow.appendChild(updateChatWindow(messageData));
-    }
+  onValue(postMessagesRef, (snapshot) => {
+    chatWindow.innerHTML = ""; // Clear chat window
+    snapshot.forEach((childSnapshot) => {
+      const messageData = childSnapshot.val();
+      const messageElement = document.createElement("p");
+      if (messageData) {
+        chatWindow.appendChild(updateChatWindow(messageData));
+      }
+    });
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   })
-  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 function updateChatWindow(message) {
