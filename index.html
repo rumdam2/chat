@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,12 @@
     <button id="loginBtn">Start</button>
   </div>
   
-  <!-- Form untuk Membuat Postingan -->
+  <!-- Daftar Postingan -->
+  <div id="posts-list" class="posts-list" style="display: none;">
+    <h3>Posts</h3>
+    <ul id="postList"></ul>
+  </div>
+
   <div id="create-post-container" style="display: none;">
     <h2>Create a New Post</h2>
     <form id="postForm">
@@ -24,12 +30,6 @@
       <textarea id="postContent" placeholder="Write your post here..." required></textarea>
       <button type="submit" id="createPostBtn">Post</button>
     </form>
-  </div>
-
-  <!-- Daftar Postingan -->
-  <div id="posts-list" class="posts-list" style="display: none;">
-    <h3>Posts</h3>
-    <ul id="postList"></ul>
   </div>
 
   <!-- Chat Room -->
