@@ -1,8 +1,3 @@
-// Import Firebase SDK (untuk Firebase v9+ modular SDK)
-import { initializeApp } from "firebase/app";
-import { getAuth, signInAnonymously } from "firebase/auth";
-import { getDatabase, ref, push, onValue } from "firebase/database";
-
 // Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
