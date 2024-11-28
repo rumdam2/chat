@@ -1,4 +1,6 @@
-// Firebase Configuration
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
   authDomain: "chat-84023.firebaseapp.com",
@@ -10,10 +12,9 @@ const firebaseConfig = {
   measurementId: "G-NGXY4DDEKW"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const messagesRef = db.ref("messages");
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const messagesRef = ref(db, "messages");
 
 // DOM Elements
 const loginContainer = document.getElementById("login-container");
@@ -42,7 +43,7 @@ loginBtn.addEventListener("click", () => {
 sendBtn.addEventListener("click", () => {
   const message = messageInput.value.trim();
   if (message) {
-    messagesRef.push({
+    push(messagesRef, {
       text: message,
       user: currentUser,
       timestamp: Date.now()
@@ -52,11 +53,10 @@ sendBtn.addEventListener("click", () => {
 });
 
 // Display messages
-messagesRef.on("child_added", (snapshot) => {
+onChildAdded(messagesRef, (snapshot) => {
   const data = snapshot.val();
   const messageElement = document.createElement("p");
   messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
   chatWindow.appendChild(messageElement);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });
-
