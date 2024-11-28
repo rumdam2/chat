@@ -138,7 +138,7 @@ function updateChatWindow(message) {
   chatWindow.innerHTML = "";
   // Iterasi semua pesan dari Firebase
   // Membuat elemen chat bubble
-  const bubble = document.createElement("div");
+  var bubble = document.createElement("div");
   const userColor = getDarkColorFromId(message.user);
   
   bubble.style.backgroundColor = userColor;
@@ -146,7 +146,7 @@ function updateChatWindow(message) {
   // Menambahkan class berdasarkan user ID (untuk styling berbeda)
   bubble.classList.add(message.user === currentUser ? "own-message" : "other-message");
 
-  bubble.innerHTML = `<strong>${message.user}:</strong> ${message.text}`;; // Isi teks pesan
+  bubble.innerHTML = `<strong>${message.user}:</strong> <br> ${message.text}`;; // Isi teks pesan
 
   return bubble
 }
