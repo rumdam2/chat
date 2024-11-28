@@ -119,26 +119,18 @@ function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   // Assign a dark background color
   chatWindow.innerHTML = ""; // Clear chat window
-  onValue(postMessagesRef, (snapshot) => {
-    console.log(snapshot)
-    snapshot.forEach((childSnapshot) => {
-      const messageData = childSnapshot.val();
-      console.log(messageData)
-      if (messageData) {
-        chatWindow.appendChild(updateChatWindow(messageData));
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      }
-    });
+  onChildAdded(postMessagesRef, (snapshot) => {
+    const messageData = snapshot.val();
+    if (messageData) {
+      chatWindow.appendChild(updateChatWindow(messageData));
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
   })
 
 }
 
 function updateChatWindow(message) {
-  // Membersihkan chat window sebelum merender ulang
-  chatWindow.innerHTML = "";
-  // Iterasi semua pesan dari Firebase
-  // Membuat elemen chat bubble
-  var bubble = document.createElement("div");
+  const bubble = document.createElement("div");
   const userColor = getDarkColorFromId(message.user);
   
   bubble.style.backgroundColor = userColor;
