@@ -103,11 +103,6 @@ createPostBtn.addEventListener("click", () => {
   }
 });
 
-// Generate a random ID for post
-function generateRandomId() {
-  return "post-" + Math.random().toString(36).substr(2, 9);
-}
-
 // Join chat room for a specific post
 function joinChatRoom(postId, post) {
   currentPostId = postId;
