@@ -119,13 +119,12 @@ function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   // Assign a dark background color
   chatWindow.innerHTML = ""; // Clear chat window
-  onValue(postMessagesRef, (snapshot) => {
-    snapshot.forEach((childSnapshot) => {
-      const messageData = childSnapshot.val();
-      if (messageData) {
-        chatWindow.appendChild(updateChatWindow(messageData));
-      }
-    });
+  onChildAdded(postMessagesRef, (snapshot) => {
+    const messageData = childSnapshot.val();
+    console.log(messageData)
+    if (messageData) {
+      chatWindow.appendChild(updateChatWindow(messageData));
+    }
     chatWindow.scrollTop = chatWindow.scrollHeight;
   })
 
@@ -144,7 +143,7 @@ function updateChatWindow(message) {
   // Menambahkan class berdasarkan user ID (untuk styling berbeda)
   bubble.classList.add(message.user === currentUser ? "own-message" : "other-message");
 
-  bubble.textContent = message.text; // Isi teks pesan
+  bubble.textContent = `<strong>${message.user}:</strong> ${message.text}`;; // Isi teks pesan
 
   return bubble
 }
