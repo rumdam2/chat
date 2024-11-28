@@ -62,6 +62,24 @@ body {
   background-color: #1b9d4b;
 }
 
+#usernameInput {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+/* Gaya untuk placeholder */
+#usernameInput::placeholder {
+  color: #aaa; /* Warna placeholder */
+  font-style: italic; /* Gaya font placeholder */
+  font-size: 16px; /* Ukuran font placeholder */
+  text-align: center; /* Agar placeholder berada di tengah input */
+}
+
 #post-form {
   background: #111; /* Dark background */
   padding: 20px;
