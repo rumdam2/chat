@@ -40,7 +40,6 @@ let currentPostId = null;
 
 // Menampilkan form ketika icon diklik
 const iconContainer = document.getElementById('icon-container');
-const createPostContainer = document.getElementById('create-post-container');
 const postForm = document.getElementById('postForm');
 
 // Daftar warna gelap
