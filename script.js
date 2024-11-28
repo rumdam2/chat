@@ -139,7 +139,7 @@ messageInput.addEventListener("keydown", (event) => {
 
 
 function sendMessage() {
-  const message = messageInput.value.trim();
+  const message = messageInput.value.trim(); // Ambil teks dari input
   if (message && currentPostId) {
     // Mengirim pesan ke Firebase
     push(ref(db, `messages/${currentPostId}`), {
@@ -148,24 +148,44 @@ function sendMessage() {
       timestamp: Date.now(),
     });
 
-    // Membuat elemen chat bubble
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble");
-
-    // Menambahkan class berdasarkan user ID (misalnya currentUser)
-    bubble.classList.add(currentUser);
-    bubble.textContent = message;
-
-    // Menambahkan bubble chat ke dalam chat window
-    chatWindow.appendChild(bubble);
-
-    // Scroll chat window agar bubble terbaru terlihat
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-
     // Clear input field
     messageInput.value = "";
   }
 }
+
+function updateChatWindow(messages) {
+  // Membersihkan chat window sebelum merender ulang
+  chatWindow.innerHTML = "";
+
+  // Iterasi semua pesan dari Firebase
+  for (const id in messages) {
+    const msg = messages[id];
+
+    // Membuat elemen chat bubble
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble");
+
+    // Menambahkan class berdasarkan user ID (untuk styling berbeda)
+    bubble.classList.add(msg.user === currentUser ? "own-message" : "other-message");
+
+    bubble.textContent = msg.text; // Isi teks pesan
+
+    // Menambahkan bubble chat ke dalam chat window
+    chatWindow.appendChild(bubble);
+  }
+
+  // Scroll otomatis ke bawah
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+// Memantau data dari Firebase
+onValue(ref(db, `messages/${currentPostId}`), (snapshot) => {
+  const messages = snapshot.val();
+  if (messages) {
+    updateChatWindow(messages); // Perbarui chat window
+  }
+});
+
 
 // Navigate back to posts list
 function backToPosts() {
