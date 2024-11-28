@@ -13,14 +13,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-// References
 const messagesRef = db.ref("messages");
-// Initialize Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
 // DOM Elements
 const loginContainer = document.getElementById("login-container");
@@ -31,17 +24,15 @@ const chatWindow = document.getElementById("chat-window");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Chat references
-const messagesRef = ref(db, "messages");
 let currentUser = null;
 
 // Handle Login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
   if (username) {
-    currentUser = username; // Store user ID
-    loginContainer.style.display = "none"; // Hide login form
-    chatContainer.style.display = "flex"; // Show chat
+    currentUser = username;
+    loginContainer.style.display = "none";
+    chatContainer.style.display = "flex";
   } else {
     alert("Please enter a valid ID!");
   }
@@ -51,20 +42,21 @@ loginBtn.addEventListener("click", () => {
 sendBtn.addEventListener("click", () => {
   const message = messageInput.value.trim();
   if (message) {
-    push(messagesRef, { 
-      text: message, 
-      user: currentUser, 
-      timestamp: Date.now() 
+    messagesRef.push({
+      text: message,
+      user: currentUser,
+      timestamp: Date.now()
     });
     messageInput.value = "";
   }
 });
 
 // Display messages
-onChildAdded(messagesRef, (snapshot) => {
+messagesRef.on("child_added", (snapshot) => {
   const data = snapshot.val();
   const messageElement = document.createElement("p");
   messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
   chatWindow.appendChild(messageElement);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });
+
