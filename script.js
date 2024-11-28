@@ -112,6 +112,16 @@ function joinChatRoom(postId, post) {
   chatContainer.style.display = "flex";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
+  // Memantau data dari Firebase
+  onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
+    console.log(snapshot)
+    const messages = snapshot.val();
+    if (messages) {
+      updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
+    } else {
+      chatWindow.innerHTML = "<p>No messages yet.</p>"; // Tampilkan pesan jika ruang chat kosong
+    }
+  });
 }
 
 // Load messages for the current post
@@ -187,17 +197,6 @@ function updateChatWindow(messages) {
   // Scroll otomatis ke bawah
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
-
-// Memantau data dari Firebase
-onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
-  console.log(snapshot)
-  const messages = snapshot.val();
-  if (messages) {
-    updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
-  } else {
-    chatWindow.innerHTML = "<p>No messages yet.</p>"; // Tampilkan pesan jika ruang chat kosong
-  }
-});
 
 // Navigate back to posts list
 function backToPosts() {
