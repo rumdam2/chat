@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,13 +27,18 @@
     </div>
   </div>
 
-  <div id="create-post-container" style="display: none;">
-    <h2>Create a New Post</h2>
-    <form id="postForm">
+<div id="create-post-container" style="display: none;">
+  <h2>Create a New Post</h2>
+  <form id="postForm">
+    <div class="mainbox">
+      <div class="iconContainer">
+        <input type="checkbox" class="checkbox">
+      </div>
       <textarea id="postContent" placeholder="Write your post here..." required></textarea>
-      <button type="submit" id="createPostBtn">Post</button>
-    </form>
-  </div>
+    </div>
+    <button type="submit" id="createPostBtn">Post</button>
+  </form>
+</div>
 
 <!-- Chat Room -->
 <div id="chat-container" class="chat-container" style="display: none;">
