@@ -102,7 +102,7 @@ function generateRandomId() {
 // Join chat room for a specific post
 function joinChatRoom(postId, post) {
   currentPostId = postId;
-  postsListContainer.style.display = "none";
+  postsListContainer.style.display = "block";
   chatContainer.style.display = "block";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
@@ -152,7 +152,5 @@ function backToPosts() {
   loadPosts();
 }
 
-const backButton = document.createElement("button");
-backButton.textContent = "Back to Posts";
+const backButton = document.getElementById("backButton");
 backButton.addEventListener("click", backToPosts);
-chatContainer.appendChild(backButton);
