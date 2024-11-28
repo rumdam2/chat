@@ -186,7 +186,7 @@ function updateChatWindow(messages) {
 }
 
 // Memantau data dari Firebase
-onValue(ref(db, `messages/${currentPostId}`), (snapshot) => {
+onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
   const messages = snapshot.val();
   if (messages) {
     updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
