@@ -68,7 +68,9 @@ function loadPosts() {
       snapshot.forEach((childSnapshot) => {
         const post = childSnapshot.val();
         const postElement = document.createElement("div");
-        postElement.classList.add("card text-bg-secondary mb-3");
+        postElement.classList.add('card');
+        postElement.classList.add('text-bg-secondary');
+        postElement.classList.add('mb-3');
         const childDiv = document.createElement('div')
         childDiv.classList.add('card-body')
         const childContent = document.createElement('p')
