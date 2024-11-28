@@ -8,17 +8,6 @@ const firebaseConfig = {
   appId: "1:138879175931:web:418c9dfc90849c4198745e",
   measurementId: "G-NGXY4DDEKW"
 };
-// Firebase configuration (Replace with your Firebase project details)
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
@@ -26,17 +15,40 @@ import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/fi
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// References
+// DOM Elements
+const loginContainer = document.getElementById("login-container");
+const chatContainer = document.getElementById("chat-container");
+const usernameInput = document.getElementById("usernameInput");
+const loginBtn = document.getElementById("loginBtn");
 const chatWindow = document.getElementById("chat-window");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
+
+// Chat references
 const messagesRef = ref(db, "messages");
+let currentUser = null;
+
+// Handle Login
+loginBtn.addEventListener("click", () => {
+  const username = usernameInput.value.trim();
+  if (username) {
+    currentUser = username; // Store user ID
+    loginContainer.style.display = "none"; // Hide login form
+    chatContainer.style.display = "flex"; // Show chat
+  } else {
+    alert("Please enter a valid ID!");
+  }
+});
 
 // Send message
 sendBtn.addEventListener("click", () => {
   const message = messageInput.value.trim();
   if (message) {
-    push(messagesRef, { text: message, timestamp: Date.now() });
+    push(messagesRef, { 
+      text: message, 
+      user: currentUser, 
+      timestamp: Date.now() 
+    });
     messageInput.value = "";
   }
 });
@@ -45,7 +57,7 @@ sendBtn.addEventListener("click", () => {
 onChildAdded(messagesRef, (snapshot) => {
   const data = snapshot.val();
   const messageElement = document.createElement("p");
-  messageElement.textContent = data.text;
+  messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
   chatWindow.appendChild(messageElement);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });
