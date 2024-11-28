@@ -67,8 +67,15 @@ function loadPosts() {
     if (snapshot.exists()) {
       snapshot.forEach((childSnapshot) => {
         const post = childSnapshot.val();
-        const postElement = document.createElement("li");
-        postElement.textContent = `${post.content}`;  // Menggunakan key Firebase sebagai ID
+        const postElement = document.createElement("div");
+        postElement.classList.add("card text-bg-secondary mb-3");
+        const childDiv = document.createElement('div')
+        childDiv.classList.add('card-body')
+        const childContent = document.createElement('p')
+        childContent.classList.add('card-text')
+        childContent.textContent = `${post.content}`;  // Menggunakan key Firebase sebagai ID
+        childDiv.appendChild(childContent)
+        postElement.appendChild(childDiv)
 
         // Add click handler to join chat room
         postElement.addEventListener("click", () => joinChatRoom(childSnapshot.key, post));
