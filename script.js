@@ -140,29 +140,30 @@ messageInput.addEventListener("keydown", (event) => {
 function sendMessage() {
   const message = messageInput.value.trim();
   if (message && currentPostId) {
+    // Mengirim pesan ke Firebase
     push(ref(db, `messages/${currentPostId}`), {
       text: message,
       user: currentUser,
       timestamp: Date.now(),
     });
-    messageInput.value = ""; // Clear input field
-  }
-}
 
-function sendMessage(text) {
-  // Membuat elemen chat bubble
-  const bubble = document.createElement("div");
-  bubble.classList.add("chat-bubble");
-  
-  // Menambahkan class berdasarkan user ID
-  bubble.classList.add(userID);
-  bubble.textContent = text;
-  
-  // Menambahkan bubble chat ke dalam chat window
-  chatWindow.appendChild(bubble);
-  
-  // Scroll chat window agar bubble chat terbaru terlihat
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+    // Membuat elemen chat bubble
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble");
+
+    // Menambahkan class berdasarkan user ID (misalnya currentUser)
+    bubble.classList.add(currentUser);
+    bubble.textContent = message;
+
+    // Menambahkan bubble chat ke dalam chat window
+    chatWindow.appendChild(bubble);
+
+    // Scroll chat window agar bubble terbaru terlihat
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    // Clear input field
+    messageInput.value = "";
+  }
 }
 
 // Navigate back to posts list
