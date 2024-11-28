@@ -68,7 +68,7 @@ function loadPosts() {
       snapshot.forEach((childSnapshot) => {
         const post = childSnapshot.val();
         const postElement = document.createElement("li");
-        postElement.textContent = `${childSnapshot.key} - ${post.content}`;  // Menggunakan key Firebase sebagai ID
+        postElement.textContent = `${post.content}`;  // Menggunakan key Firebase sebagai ID
 
         // Add click handler to join chat room
         postElement.addEventListener("click", () => joinChatRoom(childSnapshot.key, post));
