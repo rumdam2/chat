@@ -140,6 +140,7 @@ function updateChatWindow(message) {
   // Iterasi semua pesan dari Firebase
   // Membuat elemen chat bubble
   const bubble = document.createElement("div");
+  console.log(message)
   const userColor = getDarkColorFromId(message.user);
   
   bubble.style.backgroundColor = userColor;
