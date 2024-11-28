@@ -124,6 +124,7 @@ function loadMessages(postId) {
       const messageData = childSnapshot.val();
       const messageElement = document.createElement("p");
       if (messageData) {
+        console.log(messageData)
         const textElem = updateChatWindow(messageData)
         messageElement.innerHTML = textElem;
         chatWindow.appendChild(messageElement);
