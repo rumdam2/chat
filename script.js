@@ -120,15 +120,18 @@ function loadMessages(postId) {
   // Assign a dark background color
   onValue(postMessagesRef, (snapshot) => {
     chatWindow.innerHTML = ""; // Clear chat window
-    const messageData = snapshot.val();
-    console.log(snapshot)
-    console.log(messageData)
-    const messageElement = document.createElement("p");
-    if (messageData) {
-      console.log(messageData, messageData.user, messageData.text)
-      messageElement.innerHTML = updateChatWindow(messageData);
-      chatWindow.appendChild(messageElement);
-    }
+    snapshot.forEach((childSnapshot) => {
+      const messageData = childSnapshot.val();
+      console.log(childSnapshot)
+      console.log(messageData)
+      const messageElement = document.createElement("p");
+      if (messageData) {
+        console.log(messageData, messageData.user, messageData.text)
+        messageElement.innerHTML = updateChatWindow(messageData);
+        chatWindow.appendChild(messageElement);
+      }
+    });
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   })
 }
 
