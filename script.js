@@ -43,6 +43,7 @@ loginBtn.addEventListener("click", () => {
     currentUser = username;
     loginContainer.style.display = "none";
     postsListContainer.style.display = "block";
+    showCreatePostBtn.style.display = "block"; // Show the button to create posts
     loadPosts(); // Load existing posts
   } else {
     alert("Please enter a valid ID!");
