@@ -57,7 +57,7 @@ loginBtn.addEventListener("click", () => {
   if (username) {
     currentUser = username;
     loginContainer.style.display = "none";
-	createPostBtn.style.display = "none";
+	iconContainer.style.display = "none";
     postsListContainer.style.display = "flex";
     loadPosts();
   } else {
