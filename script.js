@@ -68,32 +68,32 @@ function loadPosts() {
       snapshot.forEach((childSnapshot) => {
         const post = childSnapshot.val();
         const postElement = document.createElement("li");
-        postElement.textContent = `${post.postId} - ${post.content}`;
+        postElement.textContent = `${childSnapshot.key} - ${post.content}`;  // Menggunakan key Firebase sebagai ID
 
         // Add click handler to join chat room
         postElement.addEventListener("click", () => joinChatRoom(childSnapshot.key, post));
-
         postList.appendChild(postElement);
       });
     } else {
       postList.innerHTML = "<li>No posts available.</li>";
     }
-      // Menampilkan create-post-container setelah posts dimuat
+    // Menampilkan create-post-container setelah posts dimuat
     createPostContainer.style.display = "block";
   });
 }
+
 
 // Create a new post
 createPostBtn.addEventListener("click", () => {
   const postContent = postContentInput.value.trim();
   if (postContent) {
-    const randomPostId = generateRandomId();
+    // Tidak perlu generate randomPostId lagi, karena Firebase push akan menghasilkan ID otomatis
     push(postsRef, {
-      postId: randomPostId,
       content: postContent,
       createdBy: currentUser,
       timestamp: Date.now(),
     });
+
     postContentInput.value = "";
     createPostContainer.style.display = "none";
     postsListContainer.style.display = "block";
@@ -102,6 +102,7 @@ createPostBtn.addEventListener("click", () => {
     alert("Please provide content for your post!");
   }
 });
+
 
 // Join chat room for a specific post
 function joinChatRoom(postId, post) {
@@ -117,6 +118,8 @@ function joinChatRoom(postId, post) {
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   chatWindow.innerHTML = ""; // Clear chat window
+  // Assign a dark background color
+  const userColor = getDarkColorFromId(data.user);
   onChildAdded(postMessagesRef, (snapshot) => {
     const messageData = snapshot.val();
     const messageElement = document.createElement("p");
