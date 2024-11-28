@@ -20,82 +20,40 @@ const messagesRef = ref(db, "messages");
 
 // DOM Elements
 const loginContainer = document.getElementById("login-container");
-const createPostContainer = document.getElementById("create-post-container");
-const postsListContainer = document.getElementById("posts-list");
 const usernameInput = document.getElementById("usernameInput");
 const loginBtn = document.getElementById("loginBtn");
+
+const postsListContainer = document.getElementById("posts-list");
+const postList = document.getElementById("postList");
+
+const createPostContainer = document.getElementById("create-post-container");
 const postContentInput = document.getElementById("postContent");
 const createPostBtn = document.getElementById("createPostBtn");
+
 const chatContainer = document.getElementById("chat-container");
 const chatWindow = document.getElementById("chat-window");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
-const showCreatePostBtn = document.getElementById("showCreatePostBtn");
-const cancelPostBtn = document.getElementById("cancelPostBtn");
 
 let currentUser = null;
 let currentPostId = null;
 
-// Handle login
+// Handle user login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
   if (username) {
     currentUser = username;
     loginContainer.style.display = "none";
     postsListContainer.style.display = "block";
-    showCreatePostBtn.style.display = "block"; // Show the button to create posts
-    loadPosts(); // Load existing posts
+    loadPosts();
   } else {
     alert("Please enter a valid ID!");
   }
 });
 
-// Show the create post form
-showCreatePostBtn.addEventListener("click", () => {
-  createPostContainer.style.display = "block";
-  postsListContainer.style.display = "none";
-});
-
-// Cancel the create post form
-cancelPostBtn.addEventListener("click", () => {
-  createPostContainer.style.display = "none";
-  postsListContainer.style.display = "block";
-});
-
-// Create a new post with random ID
-createPostBtn.addEventListener("click", () => {
-  const postContent = postContentInput.value.trim();
-
-  if (postContent) {
-    const randomPostId = generateRandomId(); // Generate random ID for the post
-
-    // Save new post to Firebase
-    push(postsRef, {
-      postId: randomPostId,
-      content: postContent,
-      createdBy: currentUser,
-      timestamp: Date.now(),
-    });
-
-    postContentInput.value = ""; // Clear input field
-
-    // Load the new posts list
-    loadPosts();
-    createPostContainer.style.display = "none";
-    postsListContainer.style.display = "block";
-  } else {
-    alert("Please provide content for your post!");
-  }
-});
-
-// Generate random ID for post
-function generateRandomId() {
-  return "post-" + Math.random().toString(36).substr(2, 9); // Random string for post ID
-}
-
-// Load and display all posts
+// Load posts from Firebase
 function loadPosts() {
-  postsListContainer.innerHTML = "";
+  postList.innerHTML = "";
   get(postsRef).then((snapshot) => {
     if (snapshot.exists()) {
       snapshot.forEach((childSnapshot) => {
@@ -103,29 +61,55 @@ function loadPosts() {
         const postElement = document.createElement("li");
         postElement.textContent = `${post.postId} - ${post.content}`;
 
-        // Click handler to join chat room for that post
+        // Add click handler to join chat room
         postElement.addEventListener("click", () => joinChatRoom(childSnapshot.key, post));
 
-        postsListContainer.appendChild(postElement);
+        postList.appendChild(postElement);
       });
     } else {
-      postsListContainer.innerHTML = "No posts available.";
+      postList.innerHTML = "<li>No posts available.</li>";
     }
   });
+}
+
+// Create a new post
+createPostBtn.addEventListener("click", () => {
+  const postContent = postContentInput.value.trim();
+  if (postContent) {
+    const randomPostId = generateRandomId();
+    push(postsRef, {
+      postId: randomPostId,
+      content: postContent,
+      createdBy: currentUser,
+      timestamp: Date.now(),
+    });
+    postContentInput.value = "";
+    createPostContainer.style.display = "none";
+    postsListContainer.style.display = "block";
+    loadPosts();
+  } else {
+    alert("Please provide content for your post!");
+  }
+});
+
+// Generate a random ID for post
+function generateRandomId() {
+  return "post-" + Math.random().toString(36).substr(2, 9);
 }
 
 // Join chat room for a specific post
 function joinChatRoom(postId, post) {
   currentPostId = postId;
   postsListContainer.style.display = "none";
-  chatContainer.style.display = "flex";
+  chatContainer.style.display = "block";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
 }
 
-// Load messages from a specific post's chat room
+// Load messages for the current post
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
+  chatWindow.innerHTML = ""; // Clear chat window
   onChildAdded(postMessagesRef, (snapshot) => {
     const messageData = snapshot.val();
     const messageElement = document.createElement("p");
@@ -135,7 +119,7 @@ function loadMessages(postId) {
   });
 }
 
-// Send a message in the chat room
+// Send a message
 sendBtn.addEventListener("click", () => {
   sendMessage();
 });
@@ -158,5 +142,14 @@ function sendMessage() {
   }
 }
 
-// Initial load of posts list
-loadPosts();
+// Navigate back to posts list
+function backToPosts() {
+  chatContainer.style.display = "none";
+  postsListContainer.style.display = "block";
+  loadPosts();
+}
+
+const backButton = document.createElement("button");
+backButton.textContent = "Back to Posts";
+backButton.addEventListener("click", backToPosts);
+chatContainer.appendChild(backButton);
