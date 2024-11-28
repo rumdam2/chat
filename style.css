@@ -141,6 +141,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Full height layar */
+  max-width: 600px;
 }
 
 .chat-header {
