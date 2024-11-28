@@ -242,6 +242,14 @@ body {
   line-height: 1.4;
 }
 
+.timestamp {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 10px; /* Ukuran kecil untuk waktu */
+  color: #ccc; /* Warna abu-abu */
+}
+
 .own-message {
   background-color: #25d366; /* Warna hijau untuk pesan sendiri */
   color: #fff;
