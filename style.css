@@ -136,7 +136,7 @@ body {
 
 .chat-container {
   display: flex;
-  flex-direction: column-recerse;
+  flex-direction: column-reverse;
   height: 100vh; /* Full height layar */
 }
 
