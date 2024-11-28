@@ -9,28 +9,30 @@
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 </head>
 <body>
-  <!-- Bagian untuk login dan memasukkan ID -->
+  <!-- Login Form -->
   <div id="login-container" class="login-container">
     <h1>Enter Your ID</h1>
     <input type="text" id="usernameInput" placeholder="Enter your ID..." />
     <button id="loginBtn">Start</button>
   </div>
   
-<div id="create-post-container" style="display: none;">
-  <h2>Create a New Post</h2>
-  <textarea id="postContent" placeholder="Write your post here..."></textarea>
-  <button id="createPostBtn">Post</button>
-</div>
-  
+  <!-- Form untuk Membuat Postingan -->
+  <div id="create-post-container" style="display: none;">
+    <h2>Create a New Post</h2>
+    <form id="postForm">
+      <input type="text" id="postTitle" placeholder="Enter post title" required />
+      <textarea id="postContent" placeholder="Write your post here..." required></textarea>
+      <button type="submit" id="createPostBtn">Post</button>
+    </form>
+  </div>
 
-
-  <!-- Bagian untuk menampilkan daftar postingan yang sudah dibuat -->
+  <!-- Daftar Postingan -->
   <div id="posts-list" class="posts-list" style="display: none;">
     <h3>Posts</h3>
     <ul id="postList"></ul>
   </div>
 
-  <!-- Chat Room Container -->
+  <!-- Chat Room -->
   <div id="chat-container" class="chat-container" style="display: none;">
     <div class="chat-header">
       <h1>Chat Room</h1>
