@@ -53,7 +53,7 @@ loginBtn.addEventListener("click", () => {
   if (username) {
     currentUser = username;
     loginContainer.style.display = "none";
-    postsListContainer.style.display = "block";
+    postsListContainer.style.display = "flex";
     loadPosts();
   } else {
     alert("Please enter a valid ID!");
@@ -105,7 +105,7 @@ createPostBtn.addEventListener("click", () => {
 
     postContentInput.value = "";
     createPostContainer.style.display = "none";
-    postsListContainer.style.display = "block";
+    postsListContainer.style.display = "flex";
     loadPosts();
   } else {
     alert("Please provide content for your post!");
@@ -185,7 +185,7 @@ function sendMessage() {
 // Navigate back to posts list
 function backToPosts() {
   chatContainer.style.display = "none";
-  postsListContainer.style.display = "block";
+  postsListContainer.style.display = "flex";
   createPostContainer.style.display = "block";
   loadPosts();
 }
