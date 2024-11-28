@@ -134,19 +134,19 @@ function loadMessages(postId) {
 }
 
 // // Send a message
-// sendBtn.addEventListener("click", () => {
-//   const messageText = messageInput.value;
-//   if (messageText.trim()) {
-//     sendMessage(messageText);
-//   }
-//   messageInput.value = ''; // Clear input after send
-// });
+sendBtn.addEventListener("click", () => {
+  const messageText = messageInput.value;
+  if (messageText.trim()) {
+    sendMessage(messageText);
+  }
+  messageInput.value = ''; // Clear input after send
+});
 
-// messageInput.addEventListener("keydown", (event) => {
-//   if (event.key === "Enter") {
-//     sendMessage();
-//   }
-// });
+messageInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+});
 
 
 function sendMessage() {
@@ -192,6 +192,7 @@ function updateChatWindow(messages) {
 
 // Memantau data dari Firebase
 onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
+  console.log(123123123123123123)
   const messages = snapshot.val();
   if (messages) {
     updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
