@@ -120,7 +120,7 @@ function loadMessages(postId) {
   // Assign a dark background color
   chatWindow.innerHTML = ""; // Clear chat window
   onChildAdded(postMessagesRef, (snapshot) => {
-    const messageData = childSnapshot.val();
+    const messageData = snapshot.val();
     console.log(messageData)
     if (messageData) {
       chatWindow.appendChild(updateChatWindow(messageData));
