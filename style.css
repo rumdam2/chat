@@ -18,6 +18,10 @@ body {
   word-wrap: break-word;
   line-height: 1.4;
   color: #fff; /* Kontras dengan warna background */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Aktifkan scroll */
+  height: 100%;
 }
 
 .chat-window p strong {
@@ -136,7 +140,7 @@ body {
 
 .chat-container {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   height: 100vh; /* Full height layar */
 }
 
@@ -248,12 +252,6 @@ body {
   background-color: #1a1a1a; /* Warna gelap untuk pesan pengguna lain */
   color: #fff;
   align-self: flex-start;
-}
-
-.chat-window {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto; /* Aktifkan scroll */
 }
 
 /* Responsiveness for Posts List */
