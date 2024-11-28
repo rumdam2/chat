@@ -1,6 +1,6 @@
-// Firebase configuration & initialization (already present)
+// Firebase configuration & initialization
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, get, child } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, get } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: "chat-84023.firebasestorage.app",
   messagingSenderId: "138879175931",
   appId: "1:138879175931:web:418c9dfc90849c4198745e",
-  measurementId: "G-NGXY4DDEKW"
+  measurementId: "G-NGXY4DDEKW",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -30,6 +30,8 @@ const chatContainer = document.getElementById("chat-container");
 const chatWindow = document.getElementById("chat-window");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
+const showCreatePostBtn = document.getElementById("showCreatePostBtn");
+const cancelPostBtn = document.getElementById("cancelPostBtn");
 
 let currentUser = null;
 let currentPostId = null;
@@ -41,19 +43,31 @@ loginBtn.addEventListener("click", () => {
     currentUser = username;
     loginContainer.style.display = "none";
     postsListContainer.style.display = "block";
-    loadPosts();  // Load existing posts
+    loadPosts(); // Load existing posts
   } else {
     alert("Please enter a valid ID!");
   }
 });
 
+// Show the create post form
+showCreatePostBtn.addEventListener("click", () => {
+  createPostContainer.style.display = "block";
+  postsListContainer.style.display = "none";
+});
+
+// Cancel the create post form
+cancelPostBtn.addEventListener("click", () => {
+  createPostContainer.style.display = "none";
+  postsListContainer.style.display = "block";
+});
+
 // Create a new post with random ID
 createPostBtn.addEventListener("click", () => {
   const postContent = postContentInput.value.trim();
-  
+
   if (postContent) {
-    const randomPostId = generateRandomId();  // Generate random ID for the post
-    
+    const randomPostId = generateRandomId(); // Generate random ID for the post
+
     // Save new post to Firebase
     push(postsRef, {
       postId: randomPostId,
@@ -62,7 +76,7 @@ createPostBtn.addEventListener("click", () => {
       timestamp: Date.now(),
     });
 
-    postContentInput.value = "";  // Clear input field
+    postContentInput.value = ""; // Clear input field
 
     // Load the new posts list
     loadPosts();
@@ -75,7 +89,7 @@ createPostBtn.addEventListener("click", () => {
 
 // Generate random ID for post
 function generateRandomId() {
-  return 'post-' + Math.random().toString(36).substr(2, 9);  // Random string for post ID
+  return "post-" + Math.random().toString(36).substr(2, 9); // Random string for post ID
 }
 
 // Load and display all posts
@@ -87,10 +101,10 @@ function loadPosts() {
         const post = childSnapshot.val();
         const postElement = document.createElement("li");
         postElement.textContent = `${post.postId} - ${post.content}`;
-        
+
         // Click handler to join chat room for that post
         postElement.addEventListener("click", () => joinChatRoom(childSnapshot.key, post));
-        
+
         postsListContainer.appendChild(postElement);
       });
     } else {
@@ -122,15 +136,7 @@ function loadMessages(postId) {
 
 // Send a message in the chat room
 sendBtn.addEventListener("click", () => {
-  const message = messageInput.value.trim();
-  if (message && currentPostId) {
-    push(ref(db, `messages/${currentPostId}`), {
-      text: message,
-      user: currentUser,
-      timestamp: Date.now(),
-    });
-    messageInput.value = "";
-  }
+  sendMessage();
 });
 
 messageInput.addEventListener("keydown", (event) => {
