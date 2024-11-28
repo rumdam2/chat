@@ -59,6 +59,9 @@ loginBtn.addEventListener("click", () => {
     loginContainer.style.display = "none";
     postsListContainer.style.display = "flex";
     loadPosts();
+    // Setelah login, tampilkan icon pensil
+    iconContainer.style.display = "block";
+
   } else {
     alert("Please enter a valid ID!");
   }

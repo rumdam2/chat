@@ -382,5 +382,7 @@ button#createPostBtn:hover {
 
   #create-post-container {
     width: 90%;
+	display: none;
+
   }
 }
