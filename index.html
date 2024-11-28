@@ -1,109 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chat</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div class="att">
-      <form id="attendanceForm" class="form">
-        <div class="input-row">
-          <div class="input-span">
-            <div class="container">
-              <input required="" type="text" name="name" class="input" id="name">
-              <label class="label" for="name">
-                <strong>Nama</strong>
-              </label>
-            </div>
-          </div>
-          <span class="input-span">
-            <div class="container" style="margin-bottom: 1rem;">
-              <input required="" type="text" name="comment" id="comment" class="input">
-              <label class="label bottom">
-                <strong>Chat</strong>
-              </label>
-            </div>
-          </span>
-          <div class="input-span">
-            <div class="container" style="margin-bottom: 1rem;">
-              <input required="" type="text" name="attendance" id="attendance" class="input">
-              <label class="label bottom">
-                <strong>Attendance</strong>
-              </label>
-            </div>
-          </div>
-        </div>
-        <button type="submit" class="chat">Send</button>
-      </form>
-      <div id="comments"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Chat App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>Simple Chat</h1>
     </div>
-
-    <!-- Firebase SDK imports -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-      import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
-
-      // Firebase Configuration
-      const firebaseConfig = {
-        apiKey: "API_KEY",
-        authDomain: "chat-84023.firebaseapp.com",
-        projectId: "chat-84023",
-        storageBucket: "chat-84023.appspot.com",
-        messagingSenderId: "138879175931",
-        appId: "1:138879175931:web:418c9dfc90849c4198745e",
-        databaseURL: "https://chat-84023-default-rtdb.firebaseio.com",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
-      const tableName = 'attendance';
-
-      const getComments = () => {
-        const dbRef = ref(db, `${tableName}/`);
-        const commentsDiv = $('#comments');
-        commentsDiv.html(''); // Clear comments
-
-        onValue(dbRef, (snapshot) => {
-          commentsDiv.html(''); // Refresh comments on change
-          snapshot.forEach((childSnapshot) => {
-            const childData = childSnapshot.val();
-            const elem = document.createElement('div');
-            elem.innerHTML = `
-              <div class="comment-item">
-                <p><strong>${childData.name}</strong>: ${childData.comment}</p>
-                <p><em>${childData.attendance}</em></p>
-              </div>
-            `;
-            commentsDiv.append(elem);
-          });
-        });
-      };
-
-      $(function () {
-        getComments();
-
-        $('#attendanceForm').submit(function (e) {
-          e.preventDefault();
-          const name = $('#name').val();
-          const comment = $('#comment').val();
-          const attendance = $('#attendance').val();
-
-          // Save data to Realtime Database
-          push(ref(db, tableName), { name, comment, attendance })
-            .then(() => {
-              $('#name').val('');
-              $('#comment').val('');
-              $('#attendance').val('');
-            })
-            .catch((error) => {
-              console.error('Error submitting data:', error);
-            });
-        });
-      });
-    </script>
-  </body>
+    <div id="chat-window" class="chat-window"></div>
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
