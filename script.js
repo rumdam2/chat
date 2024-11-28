@@ -69,6 +69,8 @@ function loadPosts() {
     } else {
       postList.innerHTML = "<li>No posts available.</li>";
     }
+      // Menampilkan create-post-container setelah posts dimuat
+    createPostContainer.style.display = "block";
   });
 }
 
@@ -129,6 +131,7 @@ messageInput.addEventListener("keydown", (event) => {
     sendMessage();
   }
 });
+
 
 function sendMessage() {
   const message = messageInput.value.trim();
