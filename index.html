@@ -27,18 +27,17 @@
     </div>
   </div>
 
-<!-- Icon yang dapat diklik -->
-<div id="icon-container" class="icon-container">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Pencil_icon.svg/1024px-Pencil_icon.svg.png" alt="Create Post" class="icon">
-</div>
-
-<!-- Form untuk menulis post -->
-<div id="create-post-container">
+<div id="create-post-container" style="display: none;">
   <h2>Create a New Post</h2>
   <form id="postForm">
     <textarea id="postContent" placeholder="Write your post here..." required></textarea>
     <button type="submit" id="createPostBtn">Post</button>
   </form>
+</div>
+
+<!-- Icon container yang akan diklik untuk menunjukkan form -->
+<div id="icon-container" style="position: fixed; bottom: 20px; left: 20px; cursor: pointer; padding: 10px; background-color: #bbb; border-radius: 50%;">
+  <i class="bi bi-pencil-fill" style="font-size: 24px; color: black;"></i> <!-- Ikon pensil dari Bootstrap -->
 </div>
 
 
