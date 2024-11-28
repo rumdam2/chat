@@ -121,15 +121,17 @@ function loadMessages(postId) {
   onChildAdded(postMessagesRef, (snapshot) => {
     chatWindow.innerHTML = ""; // Clear chat window
     snapshot.forEach((childSnapshot) => {
+      console.log(childSnapshot)
       const messageData = childSnapshot.val();
       const messageElement = document.createElement("p");
       if (messageData) {
-        console.log(messageData)
+        console.log(messageData, messageData.user, messageData.text)
         const textElem = updateChatWindow(messageData)
         messageElement.innerHTML = textElem;
         chatWindow.appendChild(messageElement);
         chatWindow.scrollTop = chatWindow.scrollHeight;
       }
+      console.log('okeokeokeoke')
 
     });
   })
@@ -141,7 +143,6 @@ function updateChatWindow(message) {
   // Iterasi semua pesan dari Firebase
   // Membuat elemen chat bubble
   const bubble = document.createElement("div");
-  console.log(message)
   const userColor = getDarkColorFromId(message.user);
   
   bubble.style.backgroundColor = userColor;
