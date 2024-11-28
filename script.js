@@ -118,16 +118,17 @@ function joinChatRoom(postId, post) {
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   // Assign a dark background color
+  chatWindow.innerHTML = ""; // Clear chat window
   onValue(postMessagesRef, (snapshot) => {
-    chatWindow.innerHTML = ""; // Clear chat window
-    const messageData = snapshot.val();
-    console.log(snapshot)
-    console.log(messageData)
-    if (messageData) {
-      chatWindow.appendChild(updateChatWindow(messageData));
-    }
+    snapshot.forEach((childSnapshot) => {
+      const messageData = childSnapshot.val();
+      if (messageData) {
+        chatWindow.appendChild(updateChatWindow(messageData));
+      }
+    });
     chatWindow.scrollTop = chatWindow.scrollHeight;
   })
+
 }
 
 function updateChatWindow(message) {
@@ -171,7 +172,7 @@ function sendMessage() {
     push(ref(db, `messages/${currentPostId}`), {
       text: message,
       user: currentUser,
-      timestamp: Date.now(),
+      timestamp: getFormattedTimestamp(),
     });
 
     // Clear input field
@@ -184,6 +185,17 @@ function backToPosts() {
   postsListContainer.style.display = "block";
   createPostContainer.style.display = "block";
   loadPosts();
+}
+
+function getFormattedTimestamp() {
+  const now = new Date();
+
+  const day = String(now.getDate()).padStart(2, '0'); // Tanggal (2 digit)
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Bulan (2 digit, Januari = 0)
+  const hours = String(now.getHours()).padStart(2, '0'); // Jam (2 digit)
+  const minutes = String(now.getMinutes()).padStart(2, '0'); // Menit (2 digit)
+
+  return `${day}/${month} ${hours}:${minutes}`;
 }
 
 const backButton = document.getElementById("backButton");
