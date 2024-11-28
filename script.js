@@ -120,13 +120,12 @@ function loadMessages(postId) {
   // Assign a dark background color
   onValue(postMessagesRef, (snapshot) => {
     chatWindow.innerHTML = ""; // Clear chat window
-    snapshot.forEach((childSnapshot) => {
-      const messageData = childSnapshot.val();
-      const messageElement = document.createElement("p");
-      if (messageData) {
-        chatWindow.appendChild(updateChatWindow(messageData));
-      }
-    });
+    const messageData = snapshot.val();
+    console.log(snapshot)
+    console.log(messageData)
+    if (messageData) {
+      chatWindow.appendChild(updateChatWindow(messageData));
+    }
     chatWindow.scrollTop = chatWindow.scrollHeight;
   })
 }
