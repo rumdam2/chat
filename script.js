@@ -182,9 +182,12 @@ function updateChatWindow(messages) {
 onValue(ref(db, `messages/${currentPostId}`), (snapshot) => {
   const messages = snapshot.val();
   if (messages) {
-    updateChatWindow(messages); // Perbarui chat window
+    updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
+  } else {
+    chatWindow.innerHTML = "<p>No messages yet.</p>"; // Tampilkan pesan jika ruang chat kosong
   }
 });
+
 
 
 // Navigate back to posts list
