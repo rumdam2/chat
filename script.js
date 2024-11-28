@@ -119,7 +119,7 @@ function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   chatWindow.innerHTML = ""; // Clear chat window
   // Assign a dark background color
-  get(postMessagesRef, (snapshot) => {
+  onValue(postMessagesRef, (snapshot) => {
     const messageData = snapshot.val();
     const messageElement = document.createElement("p");
     messageElement.innerHTML = `<strong>${messageData.user}:</strong> ${messageData.text}`;
