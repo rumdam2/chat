@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Chat App</title>
+  <title>Anonymous Chat</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 </head>
 <body>
-  <div class="chat-container">
+  <div id="login-container" class="login-container">
+    <h1>Enter Chat</h1>
+    <input type="text" id="usernameInput" placeholder="Enter your ID..." />
+    <button id="loginBtn">Start Chat</button>
+  </div>
+
+  <div id="chat-container" class="chat-container" style="display: none;">
     <div class="chat-header">
       <h1>Simple Chat</h1>
     </div>
