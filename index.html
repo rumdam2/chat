@@ -32,18 +32,26 @@
     </form>
   </div>
 
-  <!-- Chat Room -->
+<!-- Chat Room -->
 <div id="chat-container" class="chat-container" style="display: none;">
+  <!-- Chat Header -->
   <div class="chat-header">
     <button id="backButton" class="back-button">Back</button>
     <h1>Chat</h1>
   </div>
-  <div id="chat-window" class="chat-window"></div>
-  <div id="chat-form">
+  
+  <!-- Chat Window -->
+  <div id="chat-window" class="chat-window">
+    <!-- Pesan chat akan ditambahkan di sini -->
+  </div>
+  
+  <!-- Chat Form -->
+  <div id="chat-form" class="chat-form">
     <input type="text" id="messageInput" placeholder="Type your message..." />
     <button id="sendBtn">Send</button>
   </div>
 </div>
+
 
   <script type="module" src="script.js"></script>
 </body>
