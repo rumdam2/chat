@@ -146,7 +146,7 @@ function updateChatWindow(message) {
   // Menambahkan class berdasarkan user ID (untuk styling berbeda)
   bubble.classList.add(message.user === currentUser ? "own-message" : "other-message");
 
-  bubble.textContent = `<strong>${message.user}:</strong> ${message.text}`;; // Isi teks pesan
+  bubble.innerHTML = `<strong>${message.user}:</strong> ${message.text}`;; // Isi teks pesan
 
   return bubble
 }
