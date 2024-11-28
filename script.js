@@ -133,20 +133,20 @@ function loadMessages(postId) {
   })
 }
 
-// Send a message
-sendBtn.addEventListener("click", () => {
-  const messageText = messageInput.value;
-  if (messageText.trim()) {
-    sendMessage(messageText);
-  }
-  messageInput.value = ''; // Clear input after send
-});
+// // Send a message
+// sendBtn.addEventListener("click", () => {
+//   const messageText = messageInput.value;
+//   if (messageText.trim()) {
+//     sendMessage(messageText);
+//   }
+//   messageInput.value = ''; // Clear input after send
+// });
 
-messageInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
-});
+// messageInput.addEventListener("keydown", (event) => {
+//   if (event.key === "Enter") {
+//     sendMessage();
+//   }
+// });
 
 
 function sendMessage() {
