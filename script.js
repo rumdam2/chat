@@ -98,10 +98,10 @@ function loadPosts() {
 
 // Saat icon diklik, toggle form create post
 iconContainer.addEventListener('click', function() {
-  if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
-    createPostContainer.style.display = 'none';
-  } else {
+  if (createPostContainer.style.display === 'block' || createPostContainer.style.display === '') {
     createPostContainer.style.display = 'block';
+  } else {
+    createPostContainer.style.display = 'none';
   }
 });
 
