@@ -103,7 +103,7 @@ function generateRandomId() {
 function joinChatRoom(postId, post) {
   currentPostId = postId;
   postsListContainer.style.display = "none";
-  chatContainer.style.display = "none";
+  chatContainer.style.display = "block";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
 }
