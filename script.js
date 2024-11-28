@@ -8,6 +8,12 @@ const firebaseConfig = {
   appId: "1:138879175931:web:418c9dfc90849c4198745e",
   measurementId: "G-NGXY4DDEKW"
 };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+// References
+const messagesRef = db.ref("messages");
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
