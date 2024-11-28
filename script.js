@@ -165,6 +165,7 @@ function updateChatWindow(messages) {
   // Membersihkan chat window sebelum merender ulang
   chatWindow.innerHTML = "";
 
+  console.log(messages)
   // Iterasi semua pesan dari Firebase
   for (const id in messages) {
     const msg = messages[id];
