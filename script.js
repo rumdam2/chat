@@ -112,35 +112,44 @@ function joinChatRoom(postId, post) {
   chatContainer.style.display = "flex";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
-  // Memantau data dari Firebase
-  onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
-    console.log(snapshot)
-    const messages = snapshot.val();
-    if (messages) {
-      updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
-    } else {
-      chatWindow.innerHTML = "<p>No messages yet.</p>"; // Tampilkan pesan jika ruang chat kosong
-    }
-  });
 }
 
 // Load messages for the current post
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
   // Assign a dark background color
-  onValue(postMessagesRef, (snapshot) => {
+  onChildAdded(postMessagesRef, (snapshot) => {
     chatWindow.innerHTML = ""; // Clear chat window
     snapshot.forEach((childSnapshot) => {
       const messageData = childSnapshot.val();
       const messageElement = document.createElement("p");
       if (messageData) {
-        messageElement.innerHTML = `<strong>${messageData.user}:</strong> ${messageData.text}`;
+        const textElem = updateChatWindow(messageData)
+        messageElement.innerHTML = textElem;
         chatWindow.appendChild(messageElement);
         chatWindow.scrollTop = chatWindow.scrollHeight;
       }
 
     });
   })
+}
+
+function updateChatWindow(message) {
+  // Membersihkan chat window sebelum merender ulang
+  chatWindow.innerHTML = "";
+  // Iterasi semua pesan dari Firebase
+  // Membuat elemen chat bubble
+  const bubble = document.createElement("div");
+  const userColor = getDarkColorFromId(message.user);
+  
+  bubble.style.backgroundColor = userColor;
+  bubble.classList.add("chat-bubble");
+  // Menambahkan class berdasarkan user ID (untuk styling berbeda)
+  bubble.classList.add(message.user === currentUser ? "own-message" : "other-message");
+
+  bubble.textContent = message.text; // Isi teks pesan
+
+  return bubble
 }
 
 // // Send a message
@@ -173,31 +182,6 @@ function sendMessage() {
     messageInput.value = "";
   }
 }
-
-function updateChatWindow(messages) {
-  // Membersihkan chat window sebelum merender ulang
-  chatWindow.innerHTML = "";
-  // Iterasi semua pesan dari Firebase
-  for (const id in messages) {
-    const msg = messages[id];
-
-    // Membuat elemen chat bubble
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble");
-
-    // Menambahkan class berdasarkan user ID (untuk styling berbeda)
-    bubble.classList.add(msg.user === currentUser ? "own-message" : "other-message");
-
-    bubble.textContent = msg.text; // Isi teks pesan
-
-    // Menambahkan bubble chat ke dalam chat window
-    chatWindow.appendChild(bubble);
-  }
-
-  // Scroll otomatis ke bawah
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
 // Navigate back to posts list
 function backToPosts() {
   chatContainer.style.display = "none";
