@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
   authDomain: "chat-84023.firebaseapp.com",
@@ -27,7 +24,16 @@ const sendBtn = document.getElementById("sendBtn");
 
 let currentUser = null;
 
-// Handle Login
+// Daftar warna gelap
+const darkColors = ["#3b3b3b", "#2a2a2a", "#1b4f72", "#154734", "#4b3621", "#2c3e50"];
+
+// Fungsi untuk mendapatkan warna dari ID (acak dari daftar warna gelap)
+function getDarkColorFromId(id) {
+  const hash = id.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 0);
+  return darkColors[hash % darkColors.length];
+}
+
+// Handle login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
   if (username) {
@@ -39,16 +45,24 @@ loginBtn.addEventListener("click", () => {
   }
 });
 
-// Send message
-sendBtn.addEventListener("click", () => {
+// Handle sending messages (with Enter or Send button)
+function sendMessage() {
   const message = messageInput.value.trim();
   if (message) {
     push(messagesRef, {
       text: message,
       user: currentUser,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
-    messageInput.value = "";
+    messageInput.value = ""; // Clear input field
+  }
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+messageInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    sendMessage();
   }
 });
 
@@ -56,7 +70,13 @@ sendBtn.addEventListener("click", () => {
 onChildAdded(messagesRef, (snapshot) => {
   const data = snapshot.val();
   const messageElement = document.createElement("p");
+
+  // Assign a dark background color
+  const userColor = getDarkColorFromId(data.user);
+
   messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
+  messageElement.style.backgroundColor = userColor; // Apply background color
+  messageElement.style.color = "#fff"; // Keep text white for contrast
   chatWindow.appendChild(messageElement);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });
