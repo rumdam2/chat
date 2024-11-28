@@ -10,6 +10,21 @@ body {
   height: 100vh;
 }
 
+.chat-window p {
+  margin: 10px 0;
+  padding: 10px;
+  max-width: 70%;
+  border-radius: 8px;
+  word-wrap: break-word;
+  line-height: 1.4;
+  color: #fff; /* Kontras dengan warna background */
+}
+
+.chat-window p strong {
+  font-weight: bold;
+  display: block;
+}
+
 /* Login Container */
 .login-container {
   background: #111; /* Dark background */
