@@ -130,7 +130,7 @@ function loadMessages(postId) {
       }
 
     });
-  }
+  })
 }
 
 // Send a message
