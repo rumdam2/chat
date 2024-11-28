@@ -123,12 +123,16 @@ body {
 }
 
 .chat-header {
+  position: sticky; /* Tetap di atas saat scroll */
+  top: 0; /* Mulai dari posisi paling atas */
+  z-index: 10; /* Pastikan di atas elemen lain */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #222; /* Gelap */
+  background-color: #222; /* Warna gelap */
   color: #fff;
+  border-bottom: 1px solid #444; /* Tambahkan garis bawah */
 }
 
 .back-button {
