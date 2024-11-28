@@ -1,6 +1,6 @@
 // Firebase configuration & initialization (already present)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, set, get, child } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, get, child } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSPpm_Ufd10fa70HmCiZcDS53UpvZCVfE",
@@ -24,7 +24,6 @@ const createPostContainer = document.getElementById("create-post-container");
 const postsListContainer = document.getElementById("posts-list");
 const usernameInput = document.getElementById("usernameInput");
 const loginBtn = document.getElementById("loginBtn");
-const postIdInput = document.getElementById("postIdInput");
 const postContentInput = document.getElementById("postContent");
 const createPostBtn = document.getElementById("createPostBtn");
 const chatContainer = document.getElementById("chat-container");
@@ -41,37 +40,43 @@ loginBtn.addEventListener("click", () => {
   if (username) {
     currentUser = username;
     loginContainer.style.display = "none";
-    createPostContainer.style.display = "flex";
+    postsListContainer.style.display = "block";
+    loadPosts();  // Load existing posts
   } else {
     alert("Please enter a valid ID!");
   }
 });
 
-// Create a new post
+// Create a new post with random ID
 createPostBtn.addEventListener("click", () => {
-  const postId = postIdInput.value.trim();
   const postContent = postContentInput.value.trim();
   
-  if (postId && postContent) {
+  if (postContent) {
+    const randomPostId = generateRandomId();  // Generate random ID for the post
+    
     // Save new post to Firebase
     push(postsRef, {
-      postId: postId,
+      postId: randomPostId,
       content: postContent,
       createdBy: currentUser,
       timestamp: Date.now(),
     });
 
-    postIdInput.value = "";
-    postContentInput.value = "";
+    postContentInput.value = "";  // Clear input field
 
-    // Show post list and go back to it
+    // Load the new posts list
     loadPosts();
     createPostContainer.style.display = "none";
     postsListContainer.style.display = "block";
   } else {
-    alert("Please provide both Post ID and content!");
+    alert("Please provide content for your post!");
   }
 });
+
+// Generate random ID for post
+function generateRandomId() {
+  return 'post-' + Math.random().toString(36).substr(2, 9);  // Random string for post ID
+}
 
 // Load and display all posts
 function loadPosts() {
@@ -88,6 +93,8 @@ function loadPosts() {
         
         postsListContainer.appendChild(postElement);
       });
+    } else {
+      postsListContainer.innerHTML = "No posts available.";
     }
   });
 }
