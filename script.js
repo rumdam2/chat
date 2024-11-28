@@ -57,7 +57,6 @@ loginBtn.addEventListener("click", () => {
   if (username) {
     currentUser = username;
     loginContainer.style.display = "none";
-	iconContainer.style.display = "none";
     postsListContainer.style.display = "flex";
     loadPosts();
   } else {
@@ -100,9 +99,9 @@ function loadPosts() {
 // Saat icon diklik, toggle form create post
 iconContainer.addEventListener('click', function() {
   if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
-    createPostContainer.style.display = 'block';
-  } else {
     createPostContainer.style.display = 'none';
+  } else {
+    createPostContainer.style.display = 'block';
   }
 });
 
