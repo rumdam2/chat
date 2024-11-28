@@ -21,7 +21,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: auto; /* Aktifkan scroll */
-  height: 100%;
 }
 
 .chat-window p strong {
