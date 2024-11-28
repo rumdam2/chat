@@ -102,8 +102,8 @@ function generateRandomId() {
 // Join chat room for a specific post
 function joinChatRoom(postId, post) {
   currentPostId = postId;
-  postsListContainer.style.display = "block";
-  chatContainer.style.display = "block";
+  postsListContainer.style.display = "none";
+  chatContainer.style.display = "none";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
 }
@@ -123,7 +123,11 @@ function loadMessages(postId) {
 
 // Send a message
 sendBtn.addEventListener("click", () => {
-  sendMessage();
+  const messageText = messageInput.value;
+  if (messageText.trim()) {
+    sendMessage(messageText);
+  }
+  messageInput.value = ''; // Clear input after send
 });
 
 messageInput.addEventListener("keydown", (event) => {
@@ -143,6 +147,22 @@ function sendMessage() {
     });
     messageInput.value = ""; // Clear input field
   }
+}
+
+function sendMessage(text) {
+  // Membuat elemen chat bubble
+  const bubble = document.createElement("div");
+  bubble.classList.add("chat-bubble");
+  
+  // Menambahkan class berdasarkan user ID
+  bubble.classList.add(userID);
+  bubble.textContent = text;
+  
+  // Menambahkan bubble chat ke dalam chat window
+  chatWindow.appendChild(bubble);
+  
+  // Scroll chat window agar bubble chat terbaru terlihat
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 // Navigate back to posts list
