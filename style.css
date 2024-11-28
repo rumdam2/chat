@@ -62,6 +62,60 @@ body {
   background-color: #1b9d4b;
 }
 
+#post-form {
+  background: #111; /* Dark background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+#post-form input,
+#post-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+#post-form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #25d366;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#post-form button:hover {
+  background-color: #1b9d4b;
+}
+
+/* Responsiveness for Post Form */
+@media (max-width: 768px) {
+  #post-form {
+    width: 90%; /* Lebar form mengikuti layar lebih kecil */
+    padding: 15px;
+  }
+
+  #post-form input, #post-form textarea {
+    font-size: 14px; /* Ukuran font lebih kecil untuk inputan */
+    padding: 8px;
+  }
+
+  #post-form button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
 /* Chat Container */
 .chat-container {
   background: #000; /* AMOLED background */
