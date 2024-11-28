@@ -117,9 +117,9 @@ function joinChatRoom(postId, post) {
 // Load messages for the current post
 function loadMessages(postId) {
   const postMessagesRef = ref(db, `messages/${postId}`);
-  chatWindow.innerHTML = ""; // Clear chat window
   // Assign a dark background color
   onValue(postMessagesRef, (snapshot) => {
+    chatWindow.innerHTML = ""; // Clear chat window
     snapshot.forEach((childSnapshot) => {
       const messageData = childSnapshot.val();
       const messageElement = document.createElement("p");
@@ -167,8 +167,6 @@ function sendMessage() {
 function updateChatWindow(messages) {
   // Membersihkan chat window sebelum merender ulang
   chatWindow.innerHTML = "";
-
-  console.log(messages)
   // Iterasi semua pesan dari Firebase
   for (const id in messages) {
     const msg = messages[id];
@@ -192,7 +190,7 @@ function updateChatWindow(messages) {
 
 // Memantau data dari Firebase
 onChildAdded(ref(db, `messages/${currentPostId}`), (snapshot) => {
-  console.log(123123123123123123)
+  console.log(snapshot)
   const messages = snapshot.val();
   if (messages) {
     updateChatWindow(messages); // Perbarui chat window dengan pesan terbaru
