@@ -14,6 +14,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 const db = getDatabase(app);
 const postsRef = ref(db, "posts");
 const messagesRef = ref(db, "messages");
@@ -70,7 +71,23 @@ function getDarkColorFromId(id) {
   return darkColors[hash % darkColors.length];
 }
 
-iconContainer.style.display = "none";
+signInAnonymously(auth)
+  .then(() => {
+    const user = auth.currentUser; // Mendapatkan user anonim
+    const userId = user.uid; // Ini adalah userId yang akan digunakan
+
+const userRef = ref(db, 'users/' + userId);
+    set(userRef, {
+      username: "Anonymous User", // Bisa diganti sesuai keperluan
+      uid: userId,
+    });
+
+    console.log('User signed in anonymously:', userId);
+  })
+  .catch((error) => {
+    console.error('Error during anonymous login:', error);
+  });
+
 // Handle user login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
