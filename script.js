@@ -95,7 +95,8 @@ function loadPosts() {
       postList.innerHTML = "<li>No posts available.</li>";
     }
     // Menampilkan create-post-container setelah posts dimuat
-    createPostContainer.style.display = "block";
+    iconContainer.style.display = "block";
+	createPostContainer.style.display = "none";
   });
 }
 
