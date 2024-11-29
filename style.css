@@ -274,9 +274,16 @@ body {
 /* Responsiveness for Posts List */
 @media (max-width: 600px) {
   #posts-list {
+	margin-top: 50px; /*untuk pc*/
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+  }
+  
+    @media (max-width: 768px) {
+    #posts-list {
+      padding-top: 50px; /* Menambahkan padding untuk mobile */
+    }
   }
 
   #posts-list li {
