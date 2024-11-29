@@ -45,6 +45,17 @@ const postForm = document.getElementById('postForm');
 // Daftar warna gelap
 const darkColors = ["#3b3b3b", "#2a2a2a", "#1b4f72", "#154734", "#4b3621", "#2c3e50"];
 
+function getFormattedTimestamp() {
+  const now = new Date();
+
+  const day = String(now.getDate()).padStart(2, '0'); // Tanggal (2 digit)
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Bulan (2 digit, Januari = 0)
+  const hours = String(now.getHours()).padStart(2, '0'); // Jam (2 digit)
+  const minutes = String(now.getMinutes()).padStart(2, '0'); // Menit (2 digit)
+
+  return `${day}/${month} ${hours}:${minutes}`;
+}
+
 // Fungsi untuk mendapatkan warna dari ID (acak dari daftar warna gelap)
 function getDarkColorFromId(id) {
   const hash = id.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 0);
@@ -118,7 +129,7 @@ createPostBtn.addEventListener("click", () => {
     push(postsRef, {
       content: postContent,
       createdBy: currentUser,
-      timestamp: Date.now(),
+      timestamp: getFormattedTimestamp(),
     });
 
     postContentInput.value = "";
@@ -209,16 +220,48 @@ function backToPosts() {
   loadPosts();
 }
 
-function getFormattedTimestamp() {
-  const now = new Date();
-
-  const day = String(now.getDate()).padStart(2, '0'); // Tanggal (2 digit)
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // Bulan (2 digit, Januari = 0)
-  const hours = String(now.getHours()).padStart(2, '0'); // Jam (2 digit)
-  const minutes = String(now.getMinutes()).padStart(2, '0'); // Menit (2 digit)
-
-  return `${day}/${month} ${hours}:${minutes}`;
-}
-
 const backButton = document.getElementById("backButton");
 backButton.addEventListener("click", backToPosts);
+
+// Inisialisasi audio untuk notifikasi
+const notificationSound = new Audio('media/notification.mp3');
+
+// Fungsi untuk memutar suara notifikasi
+function playNotificationSound() {
+  notificationSound.play();
+}
+
+// Minta izin untuk menampilkan notifikasi
+if (Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+
+// Fungsi untuk menampilkan notifikasi
+function showNotification(message) {
+  if (Notification.permission === "granted") {
+    const notification = new Notification('New Message', {
+      body: `${message.user}: ${message.text}`,
+      icon: 'icon.png' // Ganti dengan ikon yang sesuai
+    });
+
+    notification.onclick = () => {
+      window.focus();
+    };
+  }
+}
+
+function loadMessages(postId) {
+  const postMessagesRef = ref(db, `messages/${postId}`);
+  chatWindow.innerHTML = ""; // Clear chat window
+  onChildAdded(postMessagesRef, (snapshot) => {
+    const messageData = snapshot.val();
+    if (messageData) {
+      chatWindow.appendChild(updateChatWindow(messageData));
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      
+      // Notifikasi suara dan browser
+      playNotificationSound();
+      showNotification(messageData);
+    }
+  })
+}
