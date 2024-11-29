@@ -56,6 +56,14 @@ function getFormattedTimestamp() {
   return `${day}/${month} ${hours}:${minutes}`;
 }
 
+// Inisialisasi audio untuk notifikasi
+const notificationSound = new Audio('media/notification.mp3');
+
+// Fungsi untuk memutar suara notifikasi
+function playNotificationSound() {
+  notificationSound.play();
+}
+
 // Fungsi untuk mendapatkan warna dari ID (acak dari daftar warna gelap)
 function getDarkColorFromId(id) {
   const hash = id.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 0);
@@ -163,9 +171,10 @@ function loadMessages(postId) {
     if (messageData) {
       chatWindow.appendChild(updateChatWindow(messageData));
       chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
+	  playNotificationSound();
+      showNotification(messageData);
+	}
   })
-
 }
 
 function updateChatWindow(message) {
@@ -220,17 +229,6 @@ function backToPosts() {
   loadPosts();
 }
 
-const backButton = document.getElementById("backButton");
-backButton.addEventListener("click", backToPosts);
-
-// Inisialisasi audio untuk notifikasi
-const notificationSound = new Audio('media/notification.mp3');
-
-// Fungsi untuk memutar suara notifikasi
-function playNotificationSound() {
-  notificationSound.play();
-}
-
 // Minta izin untuk menampilkan notifikasi
 if (Notification.permission !== "granted") {
   Notification.requestPermission();
@@ -250,18 +248,5 @@ function showNotification(message) {
   }
 }
 
-function loadMessages(postId) {
-  const postMessagesRef = ref(db, `messages/${postId}`);
-  chatWindow.innerHTML = ""; // Clear chat window
-  onChildAdded(postMessagesRef, (snapshot) => {
-    const messageData = snapshot.val();
-    if (messageData) {
-      chatWindow.appendChild(updateChatWindow(messageData));
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-      
-      // Notifikasi suara dan browser
-      playNotificationSound();
-      showNotification(messageData);
-    }
-  })
-}
+const backButton = document.getElementById("backButton");
+backButton.addEventListener("click", backToPosts);
