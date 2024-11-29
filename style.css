@@ -102,14 +102,13 @@ body {
 }
 
 #updates-header {
-  position: fixed;
-  top: 10px;
+  position: sticky;
+  top: 0;
   background-color: #000;
   color: white;
-  z-index: 20;
-  padding: 10px 15px;
+  padding: 5px;
   width: 100%; /* Agar header tetap berada di atas */
-  text-align: center;
+  text-align: left;
 }
 
 #post-form {
@@ -295,14 +294,12 @@ body {
 
 #postList {
   overflow-y: auto;
-  max-height: 72vh; /* Membuat area daftar post scrollable */
-  padding-top: 50px; /* Memberi ruang untuk header */
-}
+  max-height: 70vh; /* Membuat area daftar post scrollable */
+  }
 /* Responsiveness for Posts List */
 @media (max-width: 600px) {
   #posts-list {
-	margin-top: 50px; /*untuk pc*/
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
