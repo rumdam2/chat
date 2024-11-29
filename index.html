@@ -28,16 +28,19 @@
     </div>
   </div>
 
-<div id="create-post-container" style="display: none;">
-  <form id="postForm">
-    <textarea id="postContent" placeholder="Write your post here..." required></textarea>
-    <button type="submit" id="createPostBtn">Post</button>
-  </form>
+<!-- Tombol untuk memunculkan form -->
+<div id="icon-container" style="cursor: pointer; padding: 10px; background-color: #bbb; border-radius: 50%; margin: 10px 0;">
+  <i class="bi bi-pencil-fill" style="font-size: 24px; color: black;"></i> <!-- Ikon pensil dari Bootstrap -->
 </div>
 
-<!-- Icon container yang akan diklik untuk menunjukkan form -->
-<div id="icon-container" style="position: fixed; bottom: 20px; left: 20px; cursor: pointer; padding: 10px; background-color: #bbb; border-radius: 50%;">
-  <i class="bi bi-pencil-fill" style="font-size: 24px; color: black;"></i> <!-- Ikon pensil dari Bootstrap -->
+<!-- Form Create Post -->
+<div id="create-post-container" class="card text-bg-light mb-3" style="display: none;">
+  <div class="card-body">
+    <form id="postForm">
+      <textarea id="postContent" class="form-control mb-3" placeholder="Write your post here..." required></textarea>
+      <button type="submit" id="createPostBtn" class="btn btn-primary">Post</button>
+    </form>
+  </div>
 </div>
 
 
