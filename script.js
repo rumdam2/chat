@@ -51,6 +51,7 @@ function getDarkColorFromId(id) {
   return darkColors[hash % darkColors.length];
 }
 
+updatesHeader.style.display = "none";
 iconContainer.style.display = "none";
 // Handle user login
 loginBtn.addEventListener("click", () => {
@@ -61,8 +62,7 @@ loginBtn.addEventListener("click", () => {
     postsListContainer.style.display = "flex";
     loadPosts();
     // Setelah login, tampilkan icon pensil
-    iconContainer.style.display = "none";
-    updatesHeader.style.display = "none";
+
   } else {
     alert("Please enter a valid ID!");
   }
