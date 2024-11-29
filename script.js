@@ -62,7 +62,7 @@ loginBtn.addEventListener("click", () => {
     loadPosts();
     // Setelah login, tampilkan icon pensil
     iconContainer.style.display = "block";
-
+    updatesHeader.style.display = "block";
   } else {
     alert("Please enter a valid ID!");
   }
