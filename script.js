@@ -171,8 +171,11 @@ function loadMessages(postId) {
     if (messageData) {
       chatWindow.appendChild(updateChatWindow(messageData));
       chatWindow.scrollTop = chatWindow.scrollHeight;
-	  playNotificationSound();
-      showNotification(messageData);
+	  if (messageData.user !== currentUser) {
+        // Notifikasi suara dan browser hanya untuk pesan dari pengguna lain
+        playNotificationSound();
+        showNotification(messageData);
+      }
 	}
   })
 }
