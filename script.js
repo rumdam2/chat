@@ -74,9 +74,9 @@ function getDarkColorFromId(id) {
 }
 
 signInAnonymously(auth)
-  .then(() => {
-    const user = auth.currentUser; // Mendapatkan user anonim
-    const userId = user.uid; // Ini adalah userId yang akan digunakan
+  . .then(() => {
+      const userId = auth.currentUser ? auth.currentUser.uid : null;
+      if (userId) { // Ini adalah userId yang akan digunakan
 
 const userRef = ref(db, 'users/' + userId);
     set(userRef, {
