@@ -181,9 +181,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #222; /* Warna gelap */
+  background-color: #000; /* Warna gelap */
   color: #fff;
-  border-bottom: 1px solid #444; /* Tambahkan garis bawah */
 }
 
 .back-button {
@@ -207,8 +206,7 @@ body {
   z-index: 10;
   display: flex;
   padding: 10px;
-  background-color: #222;
-  border-top: 1px solid #444;
+  background-color: #000;
 }
 
 .chat-form input[type="text"] {
@@ -263,7 +261,7 @@ body {
 }
 
 .chat-bubble {
-  max-width: 70%;
+  max-width: 100%;
   padding: 10px;
   margin: 5px 0;
   border-radius: 10px;
