@@ -6,7 +6,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   flex-direction: column; /* Menambahkan flex-direction agar layout vertikal */
 }
 
@@ -15,14 +15,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%; /* Mengisi seluruh tinggi layar */
-  }
-
-  /* Agar setiap bagian (login, updates, chat) bisa saling menyesuaikan */
-  #login-container,
-  #posts-list,
-  #chat-container {
-    flex: 1 0 auto; /* Membuat konten saling menyesuaikan */
-    overflow: auto; /* Untuk membuat scroll jika konten melebihi ukuran */
   }
 
   /* Menyesuaikan ukuran postList dengan tinggi 80% layar */
@@ -298,12 +290,6 @@ body {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-  }
-  
-    @media (max-width: 768px) {
-    #posts-list {
-      padding-top: 50px; /* Menambahkan padding untuk mobile */
-    }
   }
 
   #posts-list li {
