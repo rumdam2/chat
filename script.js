@@ -73,6 +73,8 @@ function getDarkColorFromId(id) {
   return darkColors[hash % darkColors.length];
 }
 
+
+/* inilah */
 signInAnonymously(auth)
   . .then(() => {
       const userId = auth.currentUser ? auth.currentUser.uid : null;
