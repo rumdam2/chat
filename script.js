@@ -99,6 +99,7 @@ function loadPosts() {
   });
 }
 
+iconContainer.style.display = "block";
 createPostContainer.style.display = "none";
 // Saat icon diklik, toggle form create post
 iconContainer.addEventListener('click', function() {
@@ -135,6 +136,7 @@ function joinChatRoom(postId, post) {
   currentPostId = postId;
   postsListContainer.style.display = "none";
   createPostContainer.style.display = "none";
+  iconContainer.style.display = "block";
   chatContainer.style.display = "flex";
   chatWindow.innerHTML = `<h2>Chat for Post: ${post.postId} by ${post.createdBy}</h2>`;
   loadMessages(postId);
