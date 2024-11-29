@@ -101,6 +101,17 @@ body {
   text-align: center; /* Agar placeholder berada di tengah input */
 }
 
+#updates-header {
+  position: fixed;
+  top: 10px;
+  background-color: #000;
+  color: white;
+  z-index: 20;
+  padding: 10px 15px;
+  width: 100%; /* Agar header tetap berada di atas */
+  text-align: center;
+}
+
 #post-form {
   background: #111; /* Dark background */
   padding: 20px;
@@ -282,10 +293,16 @@ body {
   align-self: flex-start;
 }
 
+#postList {
+  overflow-y: auto;
+  max-height: 72vh; /* Membuat area daftar post scrollable */
+  padding-top: 50px; /* Memberi ruang untuk header */
+}
 /* Responsiveness for Posts List */
 @media (max-width: 600px) {
   #posts-list {
 	margin-top: 50px; /*untuk pc*/
+	margin-bottom: 2rem;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -347,15 +364,15 @@ body {
   position: static;
   bottom: 10px;
   left: 60px;
-  min-width: 60vw;
-  max-width: 80vw;
+  min-width: 40vw;   /* Lebih ramping */
+  max-width: 60vw;   /* Lebih ramping */
   background-color: #333; /* Latar belakang lebih gelap */
-  padding: 20px;
   border-radius: 8px;
   display: none;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  padding: 15px; /* Kurangi padding untuk membuat lebih slim */
 }
 
 #create-post-container h2 {
@@ -363,17 +380,39 @@ body {
   margin-bottom: 15px;
 }
 
+/* Responsif untuk ukuran layar lebih kecil */
+@media (max-width: 768px) {
+  .icon-container {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  #create-post-container {
+    width: 90%;     /* Lebih ramping di layar kecil */
+    display: none;
+    padding: 10px;  /* Kurangi padding agar lebih kompak */
+  }
+
+  textarea#postContent {
+    min-height: 40px;   /* Lebih ramping di perangkat kecil */
+  }
+
+  button#createPostBtn {
+    padding: 8px;  /* Lebih kompak di perangkat kecil */
+  }
+}
+
 /* Styling untuk textarea dan button */
 textarea#postContent {
   width: 100%;
-  min-height: 100px;
+  min-height: 5px;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 5px;
-  padding: 10px;
   color: white;
   font-family: inherit;
   resize: none;
+  padding: 4px;
 }
 
 textarea#postContent::placeholder {
