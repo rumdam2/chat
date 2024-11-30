@@ -73,21 +73,6 @@ function getDarkColorFromId(id) {
   return darkColors[hash % darkColors.length];
 }
 
-
-/* inilah */
-signInAnonymously(auth).then(()=>{
-  const userId = auth.currentUser ? auth.currentUser.uid : null;
-  if (userId) {
-    const userRef = ref(db, 'users/' + userId);
-    set(userRef, {
-      username: "Anonymous User", // Bisa diganti sesuai keperluan
-      uid: userId,
-    });
-    console.log('User signed in anonymously:', userId);
-    
-  }
-})
-
 // Handle user login
 loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
