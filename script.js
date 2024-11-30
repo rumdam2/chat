@@ -80,6 +80,7 @@ loginBtn.addEventListener("click", () => {
     currentUser = username;
     loginContainer.style.display = "none";
     postsListContainer.style.display = "flex";
+	postsListContainer.style.flexDirection = "column";
     loadPosts();
 	iconContainer.style.display = "block";
     // Setelah login, tampilkan icon pensil
@@ -98,6 +99,7 @@ function loadPosts() {
         const post = childSnapshot.val();
         const postElement = document.createElement("div");
         postElement.classList.add('card');
+		postElement.style.minWidth =  "95vw"
         postElement.classList.add('text-bg-secondary');
         postElement.classList.add('mb-3');
         const childDiv = document.createElement('div')
@@ -127,6 +129,8 @@ createPostContainer.style.display = "none";
 iconContainer.addEventListener('click', function() {
   if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
     createPostContainer.style.display = 'block';
+	createPostContainer.style.position = "absolute";
+	createPostContainer.style.bottom = "0";
 	postList.style.maxHeight = '80vh';
   } else {
     createPostContainer.style.display = 'none';
