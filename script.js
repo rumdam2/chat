@@ -129,6 +129,7 @@ iconContainer.addEventListener('click', function() {
 	postList.style.maxHeight = '80vh';
   } else {
     createPostContainer.style.display = 'none';
+	postList.style.maxHeight = '100vh';
   }
 });
 
