@@ -132,7 +132,7 @@ iconContainer.addEventListener('click', function() {
     createPostContainer.style.display = 'block';
 	createPostContainer.style.position = "absolute";
 	createPostContainer.style.bottom = "0";
-	postList.style.maxHeight = '70vh';
+	postList.style.maxHeight = '73vh';
   } else {
     createPostContainer.style.display = 'none';
 	postList.style.maxHeight = '100vh';
