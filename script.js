@@ -1,7 +1,7 @@
 // Firebase configuration & initialization
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getDatabase, ref ,push, onChildAdded, onValue, get} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
 
 const firebaseConfig = {
@@ -75,21 +75,18 @@ function getDarkColorFromId(id) {
 
 
 /* inilah */
-signInAnonymously(auth).then(() => {
-      const userId = auth.currentUser ? auth.currentUser.uid : null;
-      if (userId) { // Ini adalah userId yang akan digunakan
-
-const userRef = ref(db, 'users/' + userId);
+signInAnonymously(auth).then(()=>{
+  const userId = auth.currentUser ? auth.currentUser.uid : null;
+  if (userId) {
+    const userRef = ref(db, 'users/' + userId);
     set(userRef, {
       username: "Anonymous User", // Bisa diganti sesuai keperluan
       uid: userId,
     });
-
     console.log('User signed in anonymously:', userId);
+    
   }
-  .catch((error) => {
-    console.error('Error during anonymous login:', error);
-  });
+})
 
 // Handle user login
 loginBtn.addEventListener("click", () => {
