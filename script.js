@@ -107,7 +107,7 @@ function loadPosts() {
         childDiv.classList.add('card-body')
         const childContent = document.createElement('p')
         childContent.classList.add('card-text')
-        childContent.textContent = `${post.content} ${post.timestamp}`;  // Menggunakan key Firebase sebagai ID
+        childContent.innerHTML = `${post.content} <span class="timestamp">${post.timestamp}</span>`;  // Menggunakan key Firebase sebagai ID
 		
 		
 		 //bubble.innerHTML = `<strong>${message.user}:</strong> <br> ${message.text} <span class="timestamp">${message.timestamp}</span>`;;
