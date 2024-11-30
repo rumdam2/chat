@@ -13,8 +13,11 @@ body {
   /* Container utama untuk semua elemen */
   #main-container {
     display: flex;
+    height: 100vh;
+	display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    height: 100%; /* Mengisi seluruh tinggi layar */
   }
   /* Menyesuaikan ukuran postList dengan tinggi 80% layar */
 
