@@ -96,7 +96,7 @@ function loadPosts() {
   postList.innerHTML = "";
   get(postsRef).then((snapshot) => {
     if (snapshot.exists()) {
-      snapshot.forEach((childSnapshot) => {
+		snapshot.forEach((childSnapshot) => {
         const post = childSnapshot.val();
         const postElement = document.createElement("div");
         postElement.classList.add('card');
@@ -107,7 +107,10 @@ function loadPosts() {
         childDiv.classList.add('card-body')
         const childContent = document.createElement('p')
         childContent.classList.add('card-text')
-        childContent.textContent = `${post.content}`;  // Menggunakan key Firebase sebagai ID
+        childContent.textContent = `${post.content} ${post.timestamp}`;  // Menggunakan key Firebase sebagai ID
+		
+		
+		 //bubble.innerHTML = `<strong>${message.user}:</strong> <br> ${message.text} <span class="timestamp">${message.timestamp}</span>`;;
         childDiv.appendChild(childContent)
         postElement.appendChild(childDiv)
 
@@ -193,12 +196,10 @@ function loadMessages(postId) {
 function updateChatWindow(message) {
   const bubble = document.createElement("div");
   const userColor = getDarkColorFromId(message.user);
-  
   bubble.style.backgroundColor = userColor;
   bubble.classList.add("chat-bubble");
   // Menambahkan class berdasarkan user ID (untuk styling berbeda)
   bubble.classList.add(message.user === currentUser ? "own-message" : "other-message");
-
   bubble.innerHTML = `<strong>${message.user}:</strong> <br> ${message.text} <span class="timestamp">${message.timestamp}</span>`;; // Isi teks pesan
 
   return bubble
