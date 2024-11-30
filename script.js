@@ -86,7 +86,7 @@ const userRef = ref(db, 'users/' + userId);
     });
 
     console.log('User signed in anonymously:', userId);
-  })
+  }
   .catch((error) => {
     console.error('Error during anonymous login:', error);
   });
