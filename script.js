@@ -81,6 +81,7 @@ loginBtn.addEventListener("click", () => {
     loginContainer.style.display = "none";
     postsListContainer.style.display = "flex";
     loadPosts();
+	iconContainer.style.display = "block";
     // Setelah login, tampilkan icon pensil
 
   } else {
@@ -120,7 +121,7 @@ function loadPosts() {
   });
 }
 
-iconContainer.style.display = "block";
+
 createPostContainer.style.display = "none";
 // Saat icon diklik, toggle form create post
 iconContainer.addEventListener('click', function() {
