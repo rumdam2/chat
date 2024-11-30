@@ -294,7 +294,7 @@ body {
 /* Responsiveness for Posts List */
 @media (max-width: 600px) {
   #posts-list {
-	margin-bottom: 1rem;
+	margin-bottom: 0.3rem;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
