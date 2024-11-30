@@ -28,6 +28,7 @@ const loginBtn = document.getElementById("loginBtn");
 
 const postsListContainer = document.getElementById("posts-list");
 const postList = document.getElementById("postList");
+const mainContainer = document.getElementById("main-container");
 
 const createPostContainer = document.getElementById("create-post-container");
 const postContentInput = document.getElementById("postContent");
@@ -78,7 +79,7 @@ loginBtn.addEventListener("click", () => {
   const username = usernameInput.value.trim();
   if (username) {
     currentUser = username;
-    loginContainer.style.display = "none";
+    mainContainer.style.display = "none";
     postsListContainer.style.display = "flex";
 	postsListContainer.style.flexDirection = "column";
     loadPosts();
