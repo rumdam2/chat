@@ -18,7 +18,7 @@ body {
   }
   /* Menyesuaikan ukuran postList dengan tinggi 80% layar */
   #postList {
-    max-height: 80vh;
+    max-height: 100vh;
   }
 
 .chat-window p {

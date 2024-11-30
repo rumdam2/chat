@@ -126,6 +126,7 @@ createPostContainer.style.display = "none";
 iconContainer.addEventListener('click', function() {
   if (createPostContainer.style.display === 'none' || createPostContainer.style.display === '') {
     createPostContainer.style.display = 'block';
+	postList.style.maxHeight = 80vh;
   } else {
     createPostContainer.style.display = 'none';
   }
