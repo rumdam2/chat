@@ -75,8 +75,7 @@ function getDarkColorFromId(id) {
 
 
 /* inilah */
-signInAnonymously(auth)
-  . .then(() => {
+signInAnonymously(auth).then(() => {
       const userId = auth.currentUser ? auth.currentUser.uid : null;
       if (userId) { // Ini adalah userId yang akan digunakan
 
