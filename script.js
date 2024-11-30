@@ -1,6 +1,6 @@
 // Firebase configuration & initialization
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref ,push, onChildAdded, onValue, get} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+import { getDatabase, ref ,push, onChildAdded, onValue, get, set} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
 
