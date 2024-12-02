@@ -1,0 +1,192 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced FTTH Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Advanced FTTH Tool</h1>
+    <p>Calculate optical loss for complex FTTH networks!</p>
+  </header>
+  <main>
+    <div class="calculator">
+      <form id="ftthForm">
+        
+        <!-- Input Power -->
+        <div class="form-group">
+          <label for="inputPower">Input Power (dBm):</label>
+          <input type="number" id="inputPower" placeholder="e.g., -20" required>
+        </div>
+
+        <!-- Number of Splitters -->
+        <div class="form-group">
+          <label for="numSplitters">Number of Splitters:</label>
+          <input type="number" id="numSplitters" placeholder="e.g., 2" min="1" onchange="updateSplitterInputs()" required>
+        </div>
+
+        <!-- Dynamic Splitter Inputs -->
+        <div id="splitterInputs">
+          <!-- Splitter dropdowns will be added here -->
+        </div>
+
+        <!-- Fiber Distance -->
+        <div class="form-group">
+          <label for="distance">Fiber Distance (km):</label>
+          <input type="number" id="distance" placeholder="e.g., 10" min="0" required>
+        </div>
+
+        <!-- Splice Losses -->
+        <div class="form-group">
+          <label for="numSplices">Number of Splices:</label>
+          <input type="number" id="numSplices" placeholder="e.g., 2" min="1" onchange="updateSpliceInputs()" required>
+        </div>
+
+        <!-- Dynamic Splice Loss Inputs -->
+        <div id="spliceInputs">
+          <!-- Splice loss dropdowns will be added here -->
+        </div>
+
+		<!-- Output Power -->
+        <div class="form-group">
+          <label for="outputPower">Output Power (dBm):</label>
+          <input type="number" id="outputPower" placeholder="e.g., -25" required>
+        </div>
+
+        <!-- Loss Per Km -->
+        <div class="form-group">
+          <label for="lossPerKm">Loss per Km (dB):</label>
+          <input type="number" id="lossPerKm" value="0.35" required>
+        </div>
+
+		<!-- Updated Button -->
+			<button class="button" id="calculateBtn" type="button" onclick="calculateFTTH()">
+			  <span>Calculate</span>
+			  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 53 58" height="58" width="53">
+				<path stroke-width="9" stroke="currentColor" d="M44.25 36.3612L17.25 51.9497C11.5833 55.2213 4.5 51.1318 4.50001 44.5885L4.50001 13.4115C4.50001 6.86824 11.5833 2.77868 17.25 6.05033L44.25 21.6388C49.9167 24.9104 49.9167 33.0896 44.25 36.3612Z"></path>
+			  </svg>
+			</button>
+      </form>
+      <div id="result" class="result">
+        <!-- Result will be displayed here -->
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2024 Mini Tools by Ardie Perdana Muhammad</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const splitterLoss = {
+      "1:2": 3.5,
+      "1:4": 7.0,
+      "1:8": 10.5,
+      "1:16": 14.0,
+      "1:32": 17.5
+    };
+
+    const spliceLossOptions = {
+      "0.1": 0.1,
+      "0.2": 0.2,
+      "0.3": 0.3,
+      "0.5": 0.5,
+      "1.0": 1.0
+    };
+
+    // Update splitter input fields dynamically
+    function updateSplitterInputs() {
+      const numSplitters = parseInt(document.getElementById('numSplitters').value);
+      const splitterInputs = document.getElementById('splitterInputs');
+      splitterInputs.innerHTML = ''; // Clear previous inputs
+
+      for (let i = 1; i <= numSplitters; i++) {
+        const splitterDiv = document.createElement('div');
+        splitterDiv.classList.add('form-group');
+        splitterDiv.innerHTML = `  
+          <label for="splitter${i}">Splitter ${i}:</label>
+          <select id="splitter${i}" required>
+            <option value="1:2">1:2 (-3 dB)</option>
+            <option value="1:4">1:4 (-7 dB)</option>
+            <option value="1:8">1:8 (-10 dB)</option>
+            <option value="1:16">1:16 (-13 dB)</option>
+            <option value="1:32">1:32 (-15 dB)</option>
+          </select>
+        `;
+        splitterInputs.appendChild(splitterDiv);
+      }
+    }
+
+    // Update splice input fields dynamically
+    function updateSpliceInputs() {
+      const numSplices = parseInt(document.getElementById('numSplices').value);
+      const spliceInputs = document.getElementById('spliceInputs');
+      spliceInputs.innerHTML = ''; // Clear previous inputs
+
+      for (let i = 1; i <= numSplices; i++) {
+        const spliceDiv = document.createElement('div');
+        spliceDiv.classList.add('form-group');
+        spliceDiv.innerHTML = `
+          <label for="splice${i}">Splice ${i} Loss (dB):</label>
+          <select id="splice${i}" required>
+            <option value="0.1">0.1 dB</option>
+            <option value="0.2">0.2 dB</option>
+            <option value="0.3">0.3 dB</option>
+            <option value="0.5">0.5 dB</option>
+            <option value="1.0">1.0 dB</option>
+          </select>
+        `;
+        spliceInputs.appendChild(spliceDiv);
+      }
+    }
+
+    // Calculate FTTH loss and determine pass/fail status
+    function calculateFTTH() {
+      const inputPower = parseFloat(document.getElementById('inputPower').value);
+      const outputPower = parseFloat(document.getElementById('outputPower').value);
+      const distance = parseFloat(document.getElementById('distance').value);
+      const lossPerKm = parseFloat(document.getElementById('lossPerKm').value);
+
+      // Calculate splitter losses
+      const numSplitters = parseInt(document.getElementById('numSplitters').value);
+      let totalSplitterLoss = 0;
+      for (let i = 1; i <= numSplitters; i++) {
+        const splitterType = document.getElementById(`splitter${i}`).value;
+        totalSplitterLoss += splitterLoss[splitterType];
+      }
+
+      // Calculate splice losses
+      const numSplices = parseInt(document.getElementById('numSplices').value);
+      let totalSpliceLoss = 0;
+      for (let i = 1; i <= numSplices; i++) {
+        const spliceLoss = parseFloat(document.getElementById(`splice${i}`).value);
+        totalSpliceLoss += spliceLoss;
+      }
+
+      // Calculate fiber loss
+      const fiberLoss = distance * lossPerKm;
+      const totalLoss = fiberLoss + totalSplitterLoss + totalSpliceLoss;
+
+      // Calculate output power
+      const outputPowerCalculated = inputPower - totalLoss;
+
+      // Determine pass/fail status
+      const resultStatus = outputPowerCalculated >= outputPower ? "PASS" : "FAIL";
+
+      // Display results
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <h3>Result:</h3>
+        <p>Fiber Loss: <strong>${fiberLoss.toFixed(2)}</strong> dB</p>
+        <p>Splitter Loss: <strong>${totalSplitterLoss.toFixed(2)}</strong> dB</p>
+        <p>Splice Loss: <strong>${totalSpliceLoss.toFixed(2)}</strong> dB</p>
+        <p>Total Loss: <strong>${totalLoss.toFixed(2)}</strong> dB</p>
+        <p>Input Power: <strong>${inputPower.toFixed(2)}</strong> dBm</p>
+        <p>Calculated Output Power: <strong>${outputPowerCalculated.toFixed(2)}</strong> dBm</p>
+        <p>Status: <strong>${resultStatus}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>

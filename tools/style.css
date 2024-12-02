@@ -1,0 +1,241 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: #ff5e7d;
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1rem;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  padding: 2rem 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.tool-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.tool-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tool-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  .tool-card h2 {
+    font-size: 1rem;
+  }
+
+  .tool-card p {
+    font-size: 0.85rem;
+  }
+
+  main {
+    padding: 1rem 0.5rem;
+  }
+
+  .tool-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #2d2d2d;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  padding: 20px;
+}
+
+.calculator {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 600px; /* Sesuaikan ukuran lebar sesuai kebutuhan */
+}
+
+.form-group {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+.form-group label {
+  display: block;
+}
+
+.form-group2 {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+.form-group2 label {
+  display: block;
+}
+
+
+#splitterInputs, #spliceInputs {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+input, select {
+  margin-top: 5px;
+  padding: 5px;
+  width: 150px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Custom button style */
+.button {
+  position: relative;
+  display: inline-flex; /* Use inline-flex to align the content */
+  align-items: center;  /* Vertically center the text and icon */
+  padding: 15px 30px;
+  border: 2px solid #fefefe;
+  text-transform: uppercase;
+  color: #fefefe;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 20px;
+  background-color: #212121;
+  border: none;
+  overflow: hidden;
+}
+
+.button-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease-in-out;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.button:hover .button-overlay {
+  transform: scaleX(1);
+}
+
+.button span {
+  position: relative;
+  z-index: 1;
+}
+
+.button svg {
+  margin-left: 10px; /* Adds space between the text and icon */
+  transition: all 0.3s ease;
+  z-index: 1;
+  height: 20px; /* Adjust height of the icon */
+  width: 20px;  /* Adjust width of the icon */
+}
+
+.button:hover svg {
+  transform: translateX(5px); /* Optional, move the icon on hover */
+}
+
+
+.result {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+

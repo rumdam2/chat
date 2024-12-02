@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Glass Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Color Glass Game</h1>
+        <p>Pilih gelas dengan warna: <span id="color-display"></span></p>
+        <div id="glass-container" class="glass-container"></div>
+        <h2>Score: <span id="score">0</span></h2>
+        <h2>Time Left: <span id="time">30</span> seconds</h2>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

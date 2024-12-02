@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+    <title>Character Counter per Baris</title>
+</head>
+<body>
+    <div>
+        <h1>Character Counter per Baris</h1>
+		<p2>S = 42 N = 36 DW&DS = 21<br></p2>
+        <textarea id="inputText" placeholder="Tulis sesuatu di sini..." rows="10" cols="50"></textarea>
+        <div id="output">
+            <h3>Karakter per baris:</h3>
+			
+            <ul id="lineCounts"></ul>
+        </div>
+    </div>
+	
+    <script>
+        document.getElementById('inputText').addEventListener('input', function() {
+            const text = this.value;
+            const lines = text.split('\n');
+            const lineCounts = document.getElementById('lineCounts');
+            
+            // Clear previous output
+            lineCounts.innerHTML = '';
+
+            // Count characters per line and display
+            lines.forEach((line, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Baris ${index + 1}: ${line.length} karakter`;
+                lineCounts.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Octane Mixer Calculator</title>
+</head>
+<body>
+  <header>
+    <h1>Octane Mixer Calculator</h1>
+    <p>Find the perfect mix of fuel for your engine!</p>
+  </header>
+  <main>
+    <div class="calculator">
+      <form id="octaneForm">
+        <div class="form-group">
+          <label for="octane1">Octane 1 (RON):</label>
+          <select id="octane1" onchange="updatePrice('octane1', 'price1')" required>
+            <option value="90">90</option>
+            <option value="92">92</option>
+            <option value="95">95</option>
+            <option value="98">98</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price1">Price 1 (per liter):</label>
+          <input type="number" id="price1" readonly>
+        </div>
+        <div class="form-group">
+          <label for="money1">Money for Octane 1 (Rp):</label>
+          <input type="number" id="money1" placeholder="e.g., 50000" required>
+        </div>
+        <div class="form-group2">
+          <label for="octane2">Octane 2 (RON):</label>
+          <select id="octane2" onchange="updatePrice('octane2', 'price2')" required>
+            <option value="90">90</option>
+            <option value="92">92</option>
+            <option value="95">95</option>
+            <option value="98">98</option>
+          </select>
+        </div>
+        <div class="form-group2">
+          <label for="price2">Price 2 (per liter):</label>
+          <input type="number" id="price2" readonly>
+        </div>
+        <div class="form-group2">
+          <label for="money2">Money for Octane 2 (Rp):</label>
+          <input type="number" id="money2" placeholder="e.g., 50000" required>
+        </div>
+        <button type="button" onclick="calculateMix()">Calculate</button>
+      </form>
+      <div id="result" class="result">
+        <!-- Result will be displayed here -->
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2024 Mini Tools by Ardie Perdana Muhammad</p>
+  </footer>
+  <script>
+    const prices = {
+      90: [10000, 12090],
+      92: [12100, 12200, 12290],
+      95: [14000, 14500],
+      98: [14475]
+    };
+
+    // Update price based on selected octane
+    function updatePrice(octaneId, priceId) {
+      const octaneValue = parseInt(document.getElementById(octaneId).value);
+      const priceField = document.getElementById(priceId);
+      const priceList = prices[octaneValue];
+      priceField.value = priceList[0]; // Default to the first price
+    }
+
+    function calculateMix() {
+      const octane1 = parseFloat(document.getElementById('octane1').value);
+      const price1 = parseFloat(document.getElementById('price1').value);
+      const money1 = parseFloat(document.getElementById('money1').value);
+      const octane2 = parseFloat(document.getElementById('octane2').value);
+      const price2 = parseFloat(document.getElementById('price2').value);
+      const money2 = parseFloat(document.getElementById('money2').value);
+
+      // Validate inputs
+      if (isNaN(money1) || isNaN(money2)) {
+        document.getElementById('result').innerHTML = "<p>Please fill out all fields correctly!</p>";
+        return;
+      }
+
+      // Calculate volume for each octane
+      const volume1 = money1 / price1;
+      const volume2 = money2 / price2;
+
+      // Calculate mixed octane and total cost
+      const totalVolume = volume1 + volume2;
+      const mixedOctane = ((octane1 * volume1) + (octane2 * volume2)) / totalVolume;
+      const totalCost = money1 + money2;
+
+      // Display result
+      document.getElementById('result').innerHTML = `
+        <h3>Result:</h3>
+        <p>Mixed Octane: <strong>${mixedOctane.toFixed(2)}</strong> RON</p>
+        <p>Total Volume: <strong>${totalVolume.toFixed(2)}</strong> liters</p>
+        <p>Total Cost: <strong>Rp ${totalCost.toLocaleString()}</strong></p>
+      `;
+    }
+
+    // Set initial prices on load
+    window.onload = () => {
+      updatePrice('octane1', 'price1');
+      updatePrice('octane2', 'price2');
+    };
+  </script>
+</body>
+</html>
